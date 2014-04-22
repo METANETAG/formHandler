@@ -2,8 +2,8 @@
 
 namespace test\rules;
 
-use ch\timesplinter\formHandler\field\InputField;
-use ch\timesplinter\formHandler\rule\MinLengthRule;
+use ch\metanet\formHandler\field\InputField;
+use ch\metanet\formHandler\rule\MinLengthRule;
 
 /**
  * @author Pascal Muenst <entwicklung@metanet.ch>

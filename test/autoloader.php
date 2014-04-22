@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2014, METANET AG
  * @version 1.0.0
  */
-$path = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'libs';
+$path = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'lib';
 set_include_path(get_include_path() . PATH_SEPARATOR . $path);
 
 spl_autoload_register(function($className) {

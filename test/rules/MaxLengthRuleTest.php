@@ -2,8 +2,8 @@
 
 namespace test\rules;
 
-use ch\timesplinter\formHandler\field\InputField;
-use ch\timesplinter\formHandler\rule\MaxLengthRule;
+use ch\metanet\formHandler\field\InputField;
+use ch\metanet\formHandler\rule\MaxLengthRule;
 
 /**
  * @author Pascal Muenst <entwicklung@metanet.ch>
