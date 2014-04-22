@@ -3,6 +3,7 @@
 namespace test\rules;
 
 use ch\metanet\formHandler\field\InputField;
+use ch\metanet\formHandler\field\OptionsField;
 use ch\metanet\formHandler\rule\MaxLengthRule;
 
 /**
@@ -11,7 +12,7 @@ use ch\metanet\formHandler\rule\MaxLengthRule;
  * @version 1.0.0
  */
 class MaxLengthRuleTest extends \PHPUnit_Framework_TestCase {
-	public function testMaxLengthRule() {
+	public function testMaxLengthRuleSingeValue() {
 		$rule = new MaxLengthRule(2, 'too long');
 		$field = new InputField('test', 'test');
 		$field->setValue('abc');
@@ -23,6 +24,23 @@ class MaxLengthRuleTest extends \PHPUnit_Framework_TestCase {
 
 		$field->setValue('');
 		$this->assertSame($rule->validate($field), true);
+	}
+
+	public function testMaxLengthRuleMultipleValues() {
+		$rule = new MaxLengthRule(2, 'too long');
+		$field = new OptionsField('test', 'test', array(1 => 'apple', 2 => 'pear', 3 => 'cherry'));
+
+		$field->setValue(array());
+		$this->assertSame($rule->validate($field), true, 'Empty array');
+
+		$field->setValue(null);
+		$this->assertSame($rule->validate($field), true, 'Empty (null)');
+
+		$field->setValue(array(1 => 'apple', 2 => 'pear'));
+		$this->assertSame($rule->validate($field), true, 'Okay (2 entries)');
+
+		$field->setValue(array(1 => 'apple', 2 => 'pear', 3 => 'cherry'));
+		$this->assertSame($rule->validate($field), false, 'Too long (3 entries)');
 	}
 }
 

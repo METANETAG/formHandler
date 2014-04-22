@@ -23,8 +23,9 @@ class RadioOptionsFieldRenderer extends OptionsFieldRenderer {
 		$html = '<ul' . ((count($field->getCssClasses()) > 0)?' class="' . implode(' ', $field->getCssClasses()). '"':null) . '>';
 
 		foreach($field->getOptions() as $key => $val) {
+			$attrId = ' id="' . $field->getName() . '-' . $key . '"';
 			$checked = ($key == $field->getValue())?' checked':null;
-			$html .= '<li><label><input type="radio" name="' . $field->getName() . '" value="' . $key . '"' . $checked . '> ' . $val . '</label></li>';
+			$html .= '<li><label><input type="radio" name="' . $field->getName() . '" value="' . $key . '"' . $attrId . $checked . '> ' . $val . '</label></li>';
 		}
 
 		$html .= '</ul>';

@@ -11,6 +11,7 @@ form {
 form label {
 	cursor: pointer;
 	position: relative;
+	padding: 4px 0;
 }
 
 form dl dt abbr {
@@ -18,13 +19,14 @@ form dl dt abbr {
 	color: #c00;
 	border: none;
 	position: absolute;
-	top: -2px;
+	top: 2px;
 	font-size: 1.4em;
 }
 
 form dl {
 	border-bottom: 1px solid #ccc;
 	padding: 10px;
+	margin: 0;
 }
 
 form dl.field-error dt {
@@ -32,7 +34,8 @@ form dl.field-error dt {
 }
 
 form dl dt, form dl dd {
-
+	margin: 0;
+	padding: 0;
 }
 
 form dl dt {
@@ -66,6 +69,10 @@ form input, form select, form textarea {
 	padding: 4px;
 }
 
+form input[type="file"] {
+	border: none;
+}
+
 form dl.field-error input,
 form dl.field-error select,
 form dl.field-error textarea {
@@ -74,7 +81,10 @@ form dl.field-error textarea {
 
 form ul input, form .submit input {
 	width: auto;
-	border: none;
+	border: 1px solid #006;
+	background: #008;
+	color: #fff;
+	padding: 4px 10px;
 }
 
 form .form-date select, form .form-date input {

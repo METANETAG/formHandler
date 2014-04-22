@@ -20,7 +20,7 @@ use ch\metanet\formHandler\rule\MinLengthRule;
 use ch\metanet\formHandler\rule\RequiredRule;
 use ch\metanet\formHandler\rule\ValidEmailAddressRule;
 
-require dirname(__FILE__) . DIRECTORY_SEPARATOR . 'autoloader.php';
+require 'autoloader.php';
 
 date_default_timezone_set('Europe/Berlin');
 
@@ -130,13 +130,13 @@ $fh->setFields(array(
 		die('Alles gut! Können wir speichern!');
 	}
 
-	echo $fh->renderField($fldGender);
-	echo $fh->renderField($fldName);
-	echo $fh->renderField($fldEmail);
-	echo $fh->renderField($fldHobbies);
-	echo $fh->renderField($fldNote);
-	echo $fh->renderField($fldFile);
-	echo $fh->renderField($fldBirthDate);
+	echo $fh->renderFormComponent($fldGender);
+	echo $fh->renderFormComponent($fldName);
+	echo $fh->renderFormComponent($fldEmail);
+	echo $fh->renderFormComponent($fldHobbies);
+	echo $fh->renderFormComponent($fldNote);
+	echo $fh->renderFormComponent($fldFile);
+	echo $fh->renderFormComponent($fldBirthDate);
 
 	?>
 		<div class="submit">

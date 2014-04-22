@@ -15,7 +15,7 @@ abstract class FormFieldListener {
 	 * @param FormHandler $formHandler
 	 * @param FormField $field
 	 */
-	public function onEmptyValue(FormHandler $formHandler, FormField $field) {
+	public function onEmptyValueBeforeValidation(FormHandler $formHandler, FormField $field) {
 
 	}
 
@@ -23,7 +23,23 @@ abstract class FormFieldListener {
 	 * @param FormHandler $formHandler
 	 * @param FormField $field
 	 */
-	public function onNotEmptyValue(FormHandler $formHandler, FormField $field) {
+	public function onEmptyValueAfterValidation(FormHandler $formHandler, FormField $field) {
+
+	}
+
+	/**
+	 * @param FormHandler $formHandler
+	 * @param FormField $field
+	 */
+	public function onNotEmptyValueBeforeValidation(FormHandler $formHandler, FormField $field) {
+
+	}
+
+	/**
+	 * @param FormHandler $formHandler
+	 * @param FormField $field
+	 */
+	public function onNotEmptyValueAfterValidation(FormHandler $formHandler, FormField $field) {
 
 	}
 

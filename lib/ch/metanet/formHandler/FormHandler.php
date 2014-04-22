@@ -4,6 +4,9 @@ namespace ch\metanet\formHandler;
 
 use ch\metanet\formHandler\field\FormField;
 use ch\metanet\formHandler\field\FormFieldLabeled;
+use ch\metanet\formHandler\listener\FormFieldListener;
+use ch\metanet\formHandler\renderer\DefaultFormComponentRenderer;
+use ch\metanet\formHandler\renderer\FormComponentRenderer;
 use ch\metanet\formHandler\rule\RequiredRule;
 
 /**
@@ -22,6 +25,8 @@ class FormHandler {
 	protected $inputData;
 	protected $sentVar;
 
+	protected $formComponentRenderer;
+
 	public function __construct($method = self::METHOD_POST, $sentVar = 'send') {
 		$this->fields = array();
 
@@ -29,13 +34,15 @@ class FormHandler {
 		$this->submitLabel = 'send';
 		$this->sentVar = $sentVar;
 		$this->inputData = array();
+
+		$this->formComponentRenderer = new DefaultFormComponentRenderer();
 	}
 
 	public function render() {
 		$formHtml = '<form action="?send" method="' . $this->method . '">';
 
 		foreach($this->fields as $fld) {
-			$formHtml .= $this->renderField($fld);
+			$formHtml .= $this->renderFormComponent($fld);
 		}
 
 		$formHtml .= '
@@ -47,40 +54,8 @@ class FormHandler {
 		return $formHtml;
 	}
 
-	public function renderField(FormField $field) {
-		/** @var FormField $fld */
-		$fldHtml = $field->render();
-
-		$labelOpenTag = '<label>';
-		$labelCloseTag = '</label>';
-		$requiredStr = null;
-
-		if($field->hasRule(RequiredRule::getClassName()) === true)
-			$requiredStr = '<abbr title="required">*</abbr>';
-
-		if($field->getLinkedLabel() === true) {
-			$labelOpenTag = '<label for="' . $field->getName() . '">';
-		}
-
-		$errorHtml = null;
-		$cssClasses = array();
-
-		if($field->hasErrors() === true) {
-			$cssClasses[] = 'field-error';
-
-			$errorHtml = '<div class="field-errors"><ul>';
-
-			foreach($field->getErrors() as $error) {
-				$errorHtml .= '<li>' . $error . '</li>';
-			}
-
-			$errorHtml .= '</ul></div>';
-		}
-
-		return '<dl' . ((count($cssClasses) > 0)?' class="' . implode(' ', $cssClasses) . '"':null) . '>
-			<dt>' . $labelOpenTag . $field->getLabel() . $requiredStr . $labelCloseTag . '</dt>
-			<dd>' . $fldHtml . $errorHtml . '</dd>
-		</dl>';
+	public function renderFormComponent(FormField $field) {
+		return $this->formComponentRenderer->render($field);
 	}
 
 	public function isSent() {
@@ -100,9 +75,9 @@ class FormHandler {
 			foreach($fld->getListeners() as $l) {
 				/** @var FormFieldListener $l */
 				if($isValueEmpty === true) {
-					$l->onEmptyValue($this, $fld);
+					$l->onEmptyValueAfterValidation($this, $fld);
 				} else {
-					$l->onNotEmptyValue($this, $fld);
+					$l->onNotEmptyValueAfterValidation($this, $fld);
 				}
 			}
 		}
@@ -131,7 +106,7 @@ class FormHandler {
 
 		$field->setFormHandler($this);
 
-		$this->fields[] = $field;
+		$this->fields[$field->getName()] = $field;
 	}
 
 	/**
@@ -139,6 +114,13 @@ class FormHandler {
 	 */
 	public function getFields() {
 		return $this->fields;
+	}
+
+	public function getField($name) {
+		if(isset($this->fields[$name]) === false)
+			throw new \UnexpectedValueException('The field with name "' . $name . '" does not exist');
+
+		return $this->fields[$name];
 	}
 
 	public function getFieldsKeyValueMap() {
@@ -149,6 +131,13 @@ class FormHandler {
 		}
 
 		return $fldsKeyValueMap;
+	}
+
+	/**
+	 * @param FormComponentRenderer $formComponentRenderer
+	 */
+	public function setFormComponentRenderer(FormComponentRenderer $formComponentRenderer) {
+		$this->formComponentRenderer = $formComponentRenderer;
 	}
 }
 
