@@ -74,7 +74,7 @@ abstract class FormField {
 		} elseif($this->value instanceof \ArrayObject) {
 			return ($this->value->count() <= 0);
 		} else {
-			throw new \UnexpectedValueException('Could not check value on emptiness');
+			throw new \UnexpectedValueException('Could not check value against emptiness');
 		}
 	}
 

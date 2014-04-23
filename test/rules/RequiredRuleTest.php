@@ -13,11 +13,11 @@ use ch\metanet\formHandler\rule\RequiredRule;
  * @version 1.0.0
  */
 class RequiredRuleTest extends \PHPUnit_Framework_TestCase {
-	public function testRequiredRuleSingValue() {
+	public function testRequiredRuleSingleValue() {
 		$rule = new RequiredRule('this field is required');
 		$field = new InputField('test', 'test');
-		$field->setValue('abc');
 
+		$field->setValue('abc');
 		$this->assertSame($rule->validate($field), true, 'Not empty');
 
 		$field->setValue('');
@@ -36,8 +36,6 @@ class RequiredRuleTest extends \PHPUnit_Framework_TestCase {
 
 		$field->setValue(null);
 		$this->assertSame($rule->validate($field), false, 'Empty (null)');
-
-		$field->setValue('abc');
 	}
 }
 

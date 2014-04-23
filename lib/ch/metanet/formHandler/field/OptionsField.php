@@ -44,7 +44,10 @@ class OptionsField extends FormField {
 	 * @param mixed $value
 	 */
 	public function setValue($value) {
-		$this->value = is_array($value)?$value:array($value);
+		if($value === null)
+			$this->value = null;
+		else
+			$this->value = is_array($value)?$value:array($value);
 	}
 
 	/**
