@@ -7,7 +7,6 @@ use ch\metanet\formHandler\field\FormFieldLabeled;
 use ch\metanet\formHandler\listener\FormFieldListener;
 use ch\metanet\formHandler\renderer\DefaultFormComponentRenderer;
 use ch\metanet\formHandler\renderer\FormComponentRenderer;
-use ch\metanet\formHandler\rule\RequiredRule;
 
 /**
  * @author Pascal Muenst <entwicklung@metanet.ch>
@@ -27,6 +26,10 @@ class FormHandler {
 
 	protected $formComponentRenderer;
 
+	/**
+	 * @param string $method
+	 * @param string $sentVar The name of the variable to recognize that the form has been sent to the server
+	 */
 	public function __construct($method = self::METHOD_POST, $sentVar = 'send') {
 		$this->fields = array();
 
@@ -38,6 +41,10 @@ class FormHandler {
 		$this->formComponentRenderer = new DefaultFormComponentRenderer();
 	}
 
+	/**
+	 * Renders the whole form including submit button, all form components and the form tag itself
+	 * @return string The HTML code for this form
+	 */
 	public function render() {
 		$formHtml = '<form action="?send" method="' . $this->method . '">';
 
@@ -54,14 +61,26 @@ class FormHandler {
 		return $formHtml;
 	}
 
+	/**
+	 * @param FormField $field
+	 * @return string
+	 */
 	public function renderFormComponent(FormField $field) {
 		return $this->formComponentRenderer->render($field);
 	}
 
+	/**
+	 * Checks if the form has been sent to the server
+	 * @return bool
+	 */
 	public function isSent() {
-		return (array_key_exists($this->sentVar, $this->inputData));
+		return array_key_exists($this->sentVar, $this->inputData);
 	}
 
+	/**
+	 * Validates the form and the connected fields against the field rules
+	 * @return bool
+	 */
 	public function validate() {
 		$valid = true;
 
@@ -86,23 +105,33 @@ class FormHandler {
 	}
 
 	/**
-	 * @param array $data
+	 * Sets the input data to fill and validate the connected form fields against
+	 * @param array $data The input data (e.x. $_GET, $_POST, $_FILES or a merged array)
 	 */
 	public function setInputData(array $data) {
 		$this->inputData = $data;
 	}
 
 	/**
-	 * @param array $fields
+	 * Connects an undefined amount of form fields with this form handler instance
+	 * @param array $fields The array with form fields to be connected
 	 */
-	public function setFields($fields) {
+	public function setFields(array $fields) {
 		foreach($fields as $fld)
 			$this->addField($fld);
 	}
 
+	/**
+	 * Connects a field with the form handler instance
+	 * @param FormField $field The form field to add
+	 */
 	public function addField(FormField $field) {
-		if(array_key_exists($field->getName(), $this->inputData) === true)
-			$field->setValue($this->inputData[$field->getName()]);
+		if($this->isSent() === true) {
+			if(array_key_exists($field->getName(), $this->inputData) === true)
+				$field->setValue($this->inputData[$field->getName()]);
+			else
+				$field->setValue(null);
+		}
 
 		$field->setFormHandler($this);
 
@@ -110,12 +139,19 @@ class FormHandler {
 	}
 
 	/**
-	 * @return array
+	 * Returns all connected fields for this form handler instance
+	 * @return array All connected fields of this form handler instance
 	 */
 	public function getFields() {
 		return $this->fields;
 	}
 
+	/**
+	 * Returns a connected form field of this form handler instance selected by its name
+	 * @param $name The name of the connected form field
+	 * @return FormField The form field
+	 * @throws \UnexpectedValueException
+	 */
 	public function getField($name) {
 		if(isset($this->fields[$name]) === false)
 			throw new \UnexpectedValueException('The field with name "' . $name . '" does not exist');
@@ -123,6 +159,9 @@ class FormHandler {
 		return $this->fields[$name];
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getFieldsKeyValueMap() {
 		$fldsKeyValueMap = array();
 

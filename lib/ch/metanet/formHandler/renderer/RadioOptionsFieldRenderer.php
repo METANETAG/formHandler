@@ -1,6 +1,5 @@
 <?php
 
-
 namespace ch\metanet\formHandler\renderer;
 
 use ch\metanet\formHandler\field\OptionsField;
