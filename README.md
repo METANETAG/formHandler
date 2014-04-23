@@ -17,7 +17,7 @@ Quick code example:
 ```php
 <?php
 
-$myFrom = new FromHandler();
+$myFrom = new FormHandler();
 
 $myField = new InputField('my_field', 'My field');
 $myField->addRule(new RequiredRule('Please insert a value for my field'));
