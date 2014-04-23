@@ -1,5 +1,8 @@
 formHandler
 ===========
+
+[![Build Status](https://travis-ci.org/METANETAG/formHandler.svg)](https://travis-ci.org/METANETAG/formHandler)
+
 This is a library for handling web based form written in PHP. It takes care about verifying and rendering form components.
 
 Basic requirements of the formHandler library are:
