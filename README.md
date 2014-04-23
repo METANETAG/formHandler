@@ -11,3 +11,26 @@ Basic requirements of the formHandler library are:
 * efficiency boost - the library should generalize things you have to redo for each and every form and field in it
 
 [See the wiki](http://github.com/METANETAG/formHandler/wiki) for more information about how to use the library.
+
+Quick code example:
+
+```php
+<?php
+
+$myFrom = new FromHandler();
+
+$myField = new InputField('my_field', 'My field');
+$myField->addRule(new RequiredRule('Please insert a value for my field'));
+
+$myForm->addField($myField);
+
+if($myForm->isSent() === true && $myForm->validate() === true) {
+	echo 'Form sent to the server and validated successfully!';
+} else {
+	echo 'There has been errors during validation. Please check the red marked fields below.';
+}
+
+echo $myForm->render();
+
+/* EOF */
+```
