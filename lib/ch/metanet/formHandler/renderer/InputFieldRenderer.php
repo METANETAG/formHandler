@@ -9,7 +9,11 @@ use ch\metanet\formHandler\field\InputField;
  * @copyright Copyright (c) 2014, METANET AG
  * @version 1.0.0
  */
-abstract class InputFieldRenderer {
+abstract class InputFieldRenderer extends FieldRenderer {
+	/**
+	 * @param InputField $field
+	 * @return string
+	 */
 	public abstract function render(InputField $field);
 }
 

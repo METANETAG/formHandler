@@ -9,7 +9,7 @@ use ch\metanet\formHandler\field\OptionsField;
  * @copyright Copyright (c) 2014, METANET AG
  * @version 1.0.0
  */
-abstract class OptionsFieldRenderer {
+abstract class OptionsFieldRenderer extends FieldRenderer {
 	/**
 	 * @param OptionsField $field The field instance to render
 	 * @return string The rendered field
