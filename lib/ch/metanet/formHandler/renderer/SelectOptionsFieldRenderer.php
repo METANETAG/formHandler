@@ -19,7 +19,7 @@ class SelectOptionsFieldRenderer extends OptionsFieldRenderer {
 		$html = '<select name="' . $field->getName() . '" id="' . $field->getName() . '"' . ((count($field->getCssClasses()) > 0)?' class="' . implode(' ', $field->getCssClasses()). '"':null) . '>';
 
 		foreach($field->getOptions() as $key => $val) {
-			$selected = ($key == $field->getValue())?' selected':null;
+			$selected = (is_array($field->getValue()) && in_array($key, $field->getValue()))?' selected':null;
 			$html .= '<option value="' . $key . '"' . $selected . '>' . $val . '</option>';
 		}
 

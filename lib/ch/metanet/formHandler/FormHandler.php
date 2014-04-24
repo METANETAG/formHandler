@@ -23,6 +23,7 @@ class FormHandler {
 	protected $submitLabel;
 	protected $inputData;
 	protected $sentVar;
+	protected $errors;
 
 	protected $formComponentRenderer;
 
@@ -37,6 +38,7 @@ class FormHandler {
 		$this->submitLabel = 'send';
 		$this->sentVar = $sentVar;
 		$this->inputData = array();
+		$this->errors = array();
 
 		$this->formComponentRenderer = new DefaultFormComponentRenderer();
 	}
@@ -83,11 +85,14 @@ class FormHandler {
 	 */
 	public function validate() {
 		$valid = true;
+		$this->errors = array();
 
 		foreach($this->fields as $fld) {
 			/** @var FormField $fld */
-			if(($validationResult = $fld->validate()) === false)
+			if(($validationResult = $fld->validate()) === false) {
 				$valid = $validationResult;
+				$this->errors = array_merge($this->errors, $fld->getErrors());
+			}
 
 			$isValueEmpty = $fld->isValueEmpty();
 
@@ -102,6 +107,21 @@ class FormHandler {
 		}
 
 		return $valid;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function hasErrors() {
+		return (count($this->errors) > 0);
+	}
+
+	/**
+	 * Returns all the current error messages of all connected fields occurred during last validation
+	 * @return array The error messages
+	 */
+	public function getErrors() {
+		return $this->errors;
 	}
 
 	/**
@@ -148,7 +168,7 @@ class FormHandler {
 
 	/**
 	 * Returns a connected form field of this form handler instance selected by its name
-	 * @param $name The name of the connected form field
+	 * @param string $name The name of the connected form field
 	 * @return FormField The form field
 	 * @throws \UnexpectedValueException
 	 */
@@ -160,9 +180,10 @@ class FormHandler {
 	}
 
 	/**
-	 * @return array
+	 * Returns a key value map of all connected fields. Where the field name is the key and its current data the value.
+	 * @return array A key value map of all the fields connected to this form handler instance
 	 */
-	public function getFieldsKeyValueMap() {
+	public function getFieldsAsKeyValueMap() {
 		$fldsKeyValueMap = array();
 
 		foreach($this->fields as $fld) {

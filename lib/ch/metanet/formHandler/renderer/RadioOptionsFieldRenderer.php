@@ -16,9 +16,6 @@ class RadioOptionsFieldRenderer extends OptionsFieldRenderer {
 	 * @throws \UnexpectedValueException
 	 */
 	public function render(OptionsField $field) {
-		if(($field instanceof OptionsField) === false)
-			throw new \UnexpectedValueException('Only objects of instance OptionsField are allowed');
-
 		$html = '<ul' . ((count($field->getCssClasses()) > 0)?' class="' . implode(' ', $field->getCssClasses()). '"':null) . '>';
 
 		foreach($field->getOptions() as $key => $val) {

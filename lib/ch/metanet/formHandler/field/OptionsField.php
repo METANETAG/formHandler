@@ -46,6 +46,8 @@ class OptionsField extends FormField {
 	public function setValue($value) {
 		if($value === null)
 			$this->value = null;
+		elseif($this->isValueEmpty() === true)
+			$this->value = array();
 		else
 			$this->value = is_array($value)?$value:array($value);
 	}
