@@ -12,8 +12,8 @@ use ch\metanet\formHandler\renderer\SelectOptionsFieldRenderer;
  */
 class OptionsField extends FormField {
 	protected $options;
-	/** @var  OptionsFieldRenderer */
-	protected $fieldRenderer;
+	protected $optionsFieldRenderer;
+	protected $errorMessageInvalidOption;
 
 	/**
 	 * @param string $name
@@ -25,22 +25,53 @@ class OptionsField extends FormField {
 		parent::__construct($name, $label, $ruleSet);
 
 		$this->options = $options;
-		$this->fieldRenderer = new SelectOptionsFieldRenderer();
+		$this->optionsFieldRenderer = new SelectOptionsFieldRenderer();
 		$this->linkedLabel = false;
+		$this->errorMessageInvalidOption = 'Please choose a valid option';
 	}
 
 	public function render() {
-		return $this->fieldRenderer->render($this);
+		return $this->optionsFieldRenderer->render($this);
 	}
 
 	/**
-	 * @param OptionsFieldRenderer $fieldRenderer
+	 * @return bool
 	 */
-	public function setFieldRenderer(OptionsFieldRenderer $fieldRenderer) {
-		$this->fieldRenderer = $fieldRenderer;
+	public function validate() {
+		if($this->isValueEmpty() === false) {
+			if($this->validateAgainstOptions() === false)
+				return false;
+		}
+
+		return parent::validate();
+	}
+
+	protected function validateAgainstOptions() {
+		if(is_scalar($this->value) === true) {
+			return array_key_exists($this->value, $this->options);
+		} elseif(is_array($this->value) === true) {
+			foreach($this->value as $val) {
+				if(array_key_exists($val, $this->options) === true)
+					continue;
+
+				return false;
+			}
+		} else {
+			throw new \UnexpectedValueException('The field value is neither a scalar data type nor an array');
+		}
+
+		return true;
 	}
 
 	/**
+	 * @param OptionsFieldRenderer $optionsFieldRenderer
+	 */
+	public function setOptionsFieldRenderer(OptionsFieldRenderer $optionsFieldRenderer) {
+		$this->optionsFieldRenderer = $optionsFieldRenderer;
+	}
+
+	/**
+	 * The
 	 * @param array $options
 	 */
 	public function setOptions($options) {
@@ -52,6 +83,13 @@ class OptionsField extends FormField {
 	 */
 	public function getOptions() {
 		return $this->options;
+	}
+
+	/**
+	 * @param mixed $errorMessageInvalidOption
+	 */
+	public function setErrorMessageInvalidOption($errorMessageInvalidOption) {
+		$this->errorMessageInvalidOption = $errorMessageInvalidOption;
 	}
 }
 

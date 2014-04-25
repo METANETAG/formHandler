@@ -1,6 +1,6 @@
 <?php
 
-namespace test\rules;
+namespace tests\rules;
 
 use ch\metanet\formHandler\field\InputField;
 use ch\metanet\formHandler\field\OptionsField;

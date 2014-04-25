@@ -3,5 +3,8 @@
         <testsuite name="formHandler rules">
             <directory>rules</directory>
         </testsuite>
+        <testsuite name="formHandler fields">
+            <directory>fields</directory>
+        </testsuite>
     </testsuites>
 </phpunit>

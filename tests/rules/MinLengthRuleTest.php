@@ -1,33 +1,36 @@
 <?php
 
-namespace test\rules;
+namespace tests\rules;
 
 use ch\metanet\formHandler\field\InputField;
 use ch\metanet\formHandler\field\OptionsField;
-use ch\metanet\formHandler\rule\MaxLengthRule;
+use ch\metanet\formHandler\rule\MinLengthRule;
 
 /**
  * @author Pascal Muenst <entwicklung@metanet.ch>
  * @copyright Copyright (c) 2014, METANET AG
  * @version 1.0.0
  */
-class MaxLengthRuleTest extends \PHPUnit_Framework_TestCase {
-	public function testMaxLengthRuleSingeValue() {
-		$rule = new MaxLengthRule(2, 'too long');
+class MinLengthRuleTest extends \PHPUnit_Framework_TestCase {
+	public function testMinLengthRuleSingleValue() {
+		$rule = new MinLengthRule(2, 'too short');
 		$field = new InputField('test', 'test');
 		$field->setValue('abc');
 
-		$this->assertSame($rule->validate($field), false);
+		$this->assertSame($rule->validate($field), true, 'Long enough');
 
 		$field->setValue('ab');
-		$this->assertSame($rule->validate($field), true);
+		$this->assertSame($rule->validate($field), true, 'On bounderies');
 
 		$field->setValue('');
-		$this->assertSame($rule->validate($field), true);
+		$this->assertSame($rule->validate($field), true, 'Zero length');
+
+		$field->setValue(null);
+		$this->assertSame($rule->validate($field), true, 'Zero length');
 	}
 
-	public function testMaxLengthRuleMultipleValues() {
-		$rule = new MaxLengthRule(2, 'too long');
+	public function testMinLengthRuleMultipleValues() {
+		$rule = new MinLengthRule(2, 'too short');
 		$field = new OptionsField('test', 'test', array(1 => 'apple', 2 => 'pear', 3 => 'cherry'));
 
 		$field->setValue(array());
@@ -36,11 +39,11 @@ class MaxLengthRuleTest extends \PHPUnit_Framework_TestCase {
 		$field->setValue(null);
 		$this->assertSame($rule->validate($field), true, 'Empty (null)');
 
+		$field->setValue(array(1 => 'apple'));
+		$this->assertSame($rule->validate($field), false, 'Too short (1 entry)');
+
 		$field->setValue(array(1 => 'apple', 2 => 'pear'));
 		$this->assertSame($rule->validate($field), true, 'Okay (2 entries)');
-
-		$field->setValue(array(1 => 'apple', 2 => 'pear', 3 => 'cherry'));
-		$this->assertSame($rule->validate($field), false, 'Too long (3 entries)');
 	}
 }
 
