@@ -12,7 +12,7 @@ use ch\metanet\formHandler\rule\MaxLengthRule;
  * @version 1.0.0
  */
 class MaxLengthRuleTest extends \PHPUnit_Framework_TestCase {
-	public function testMaxLengthRuleSingeValue() {
+	public function testMaxLengthRuleSingleValue() {
 		$rule = new MaxLengthRule(2, 'too long');
 		$field = new InputField('test', 'test');
 		$field->setValue('abc');

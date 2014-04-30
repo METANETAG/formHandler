@@ -133,12 +133,23 @@ class FormHandler {
 	}
 
 	/**
-	 * Connects an undefined amount of form fields with this form handler instance
+	 * Connects an undefined amount of form fields with this form handler instance preserving the already connected
+	 * fields of this instance
+	 * @param array $fields The array with form fields to be connected
+	 */
+	public function addFields(array $fields) {
+		foreach($fields as $fld)
+			$this->addField($fld);
+	}
+
+	/**
+	 * Connects an undefined amount of form fields with this form handler instance and overrides all the already
+	 * connected fields of this instance
 	 * @param array $fields The array with form fields to be connected
 	 */
 	public function setFields(array $fields) {
-		foreach($fields as $fld)
-			$this->addField($fld);
+		$this->fields = array();
+		$this->addFields($fields);
 	}
 
 	/**
@@ -198,6 +209,14 @@ class FormHandler {
 	 */
 	public function setFormComponentRenderer(FormComponentRenderer $formComponentRenderer) {
 		$this->formComponentRenderer = $formComponentRenderer;
+	}
+
+	/**
+	 * Add a general error to this FormHandler instance
+	 * @param string $errorMessage The error message to add
+	 */
+	public function addError($errorMessage) {
+		$this->errors[] = $errorMessage;
 	}
 }
 

@@ -2,6 +2,7 @@
 
 namespace ch\metanet\formHandler\field;
 
+use ch\metanet\formHandler\FormHandler;
 use ch\metanet\formHandler\listener\FormFieldListener;
 use ch\metanet\formHandler\rule\Rule;
 
@@ -11,6 +12,7 @@ use ch\metanet\formHandler\rule\Rule;
  * @version 1.0.0
  */
 abstract class FormField {
+	/** @var FormHandler */
 	protected $formHandler;
 
 	protected $name;
@@ -160,6 +162,9 @@ abstract class FormField {
 	 */
 	public function addError($errorMessage) {
 		$this->errors[] = $errorMessage;
+
+		if($this->formHandler instanceof FormHandler)
+			$this->formHandler->addError($errorMessage);
 	}
 
 	/**
