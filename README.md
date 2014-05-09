@@ -27,7 +27,7 @@ $myForm->addField($myField);
 if($myForm->isSent() === true && $myForm->validate() === true) {
 	echo 'Form sent to the server and validated successfully!';
 } else {
-	echo 'There has been errors during validation. Please check the red marked fields below.';
+	echo 'There have been errors during validation. Please check the red marked fields below.';
 }
 
 echo $myForm->render();
