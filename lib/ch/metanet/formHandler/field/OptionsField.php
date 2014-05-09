@@ -48,11 +48,16 @@ class OptionsField extends FormField {
 
 	protected function validateAgainstOptions() {
 		if(is_scalar($this->value) === true) {
-			return array_key_exists($this->value, $this->options);
+			if(($resCheck = array_key_exists($this->value, $this->options)) === false)
+				$this->addError($this->errorMessageInvalidOption);
+
+			return $resCheck;
 		} elseif(is_array($this->value) === true) {
 			foreach($this->value as $val) {
 				if(array_key_exists($val, $this->options) === true)
 					continue;
+
+				$this->addError($this->errorMessageInvalidOption);
 
 				return false;
 			}

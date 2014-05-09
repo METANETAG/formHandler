@@ -12,14 +12,14 @@ use ch\metanet\formHandler\field\OptionsField;
  */
 class SelectOptionsFieldRenderer extends OptionsFieldRenderer {
 	/**
-	 * @param OptionsField $field
-	 * @return string
+	 * @param OptionsField $field The OptionField to render
+	 * @return string The HTML of the rendered select field
 	 */
 	public function render(OptionsField $field) {
 		$html = '<select name="' . $field->getName() . '" id="' . $field->getName() . '"' . ((count($field->getCssClasses()) > 0)?' class="' . implode(' ', $field->getCssClasses()). '"':null) . '>';
 
 		foreach($field->getOptions() as $key => $val) {
-			$selected = (is_array($field->getValue()) && in_array($key, $field->getValue()))?' selected':null;
+			$selected = ($key == $field->getValue())?' selected':null;
 			$html .= '<option value="' . $key . '"' . $selected . '>' . $val . '</option>';
 		}
 
