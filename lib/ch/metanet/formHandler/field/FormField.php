@@ -136,6 +136,11 @@ abstract class FormField {
 		$this->ruleSet = array_merge($this->ruleSet, $ruleSet);
 	}
 
+	public function resetChecked() {
+		$this->checked = false;
+		$this->errors = array();
+	}
+
 	/**
 	 * @param mixed $value
 	 */

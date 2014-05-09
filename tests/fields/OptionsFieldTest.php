@@ -23,15 +23,19 @@ class OptionsFieldTest extends \PHPUnit_Framework_TestCase {
 	public function testValidate() {
 		$field = new OptionsField('test', 'test', array(1 => 'some value'));
 
+		$field->resetChecked();
 		$field->setValue(2);
 		$this->assertSame($field->validate(), false, 'Invalid scalar value');
 
+		$field->resetChecked();
 		$field->setValue(array(2));
 		$this->assertSame($field->validate(), false, 'Invalid array value');
 
+		$field->resetChecked();
 		$field->setValue(1);
 		$this->assertSame($field->validate(), true, 'Correct scalar value');
 
+		$field->resetChecked();
 		$field->setValue(array(1));
 		$this->assertSame($field->validate(), true, 'Correct array value');
 	}
