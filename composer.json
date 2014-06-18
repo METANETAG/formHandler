@@ -12,7 +12,7 @@
 
 	"autoload": {
 		"psr-4": {
-			"ch\\metanet\\formHandler": "lib/ch/metanet/formHandler/"
+			"ch\\metanet\\formHandler\\": "lib/ch/metanet/formHandler/"
 		}
 	},
 
