@@ -1,4 +1,4 @@
-<phpunit bootstrap="autoloader.php" colors="true">
+<phpunit bootstrap="../vendor/autoload.php" colors="true">
     <testsuites>
         <testsuite name="formHandler rules">
             <directory>rules</directory>
