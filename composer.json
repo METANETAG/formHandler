@@ -1,5 +1,5 @@
 {
-	"name": "metanet/formHandler",
+	"name": "metanet/form-handler",
 	"type": "library",
 	"description": "Library for an easy handling of web based forms written in PHP.",
 	"keywords": ["form", "form handling"],
