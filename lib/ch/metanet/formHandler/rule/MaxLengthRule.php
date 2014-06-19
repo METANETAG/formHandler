@@ -24,7 +24,7 @@ class MaxLengthRule extends Rule {
 
 	/**
 	 * @param FormField $field
-	 * @return bool|mixed
+	 * @return bool
 	 * @throws \UnexpectedValueException
 	 */
 	public function validate(FormField $field) {
