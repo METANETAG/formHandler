@@ -91,7 +91,7 @@ class OptionsField extends FormField {
 	}
 
 	/**
-	 * @param mixed $errorMessageInvalidOption
+	 * @param string $errorMessageInvalidOption
 	 */
 	public function setErrorMessageInvalidOption($errorMessageInvalidOption) {
 		$this->errorMessageInvalidOption = $errorMessageInvalidOption;

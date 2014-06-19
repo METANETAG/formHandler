@@ -29,6 +29,7 @@ class FileField extends FormField {
 			if($l instanceof FileFieldListener === false)
 				continue;
 
+			/** @var FileFieldListener $l */
 			if($resCode === UPLOAD_ERR_OK) {
 				$l->onUploadSuccess($this->formHandler, $this);
 			} else {
