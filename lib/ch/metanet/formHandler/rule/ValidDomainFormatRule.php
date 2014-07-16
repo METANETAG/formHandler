@@ -1,6 +1,7 @@
 <?php
 
 namespace ch\metanet\formHandler\rule;
+
 use ch\metanet\formHandler\field\FormField;
 
 /**
@@ -9,6 +10,18 @@ use ch\metanet\formHandler\field\FormField;
  * @version 1.0.0
  */
 class ValidDomainFormatRule extends Rule {
+	protected $publicTld;
+
+	/**
+	 * @param $errorMessage
+	 * @param $publicTld
+	 */
+	function __construct($errorMessage, $publicTld = true) {
+		parent::__construct($errorMessage);
+
+		$this->publicTld = $publicTld;
+	}
+
 	/**
 	 * @param FormField $field The field instance to check against
 	 * @return bool
@@ -19,10 +32,13 @@ class ValidDomainFormatRule extends Rule {
 
 		$fldValue = preg_replace(array('@^[a-z]+://@i', '@^www\.@i'), null, $field->getValue());
 
-		if(strpos($fldValue, '.') === false)
+		if(($lastPoint = strrpos($fldValue, '.')) === false)
 			return false;
 
-		return (filter_var('http://' . $fldValue, FILTER_VALIDATE_URL) !== false);
+		if($this->publicTld === true && strlen(substr($fldValue, $lastPoint + 1)) < 2)
+			return false;
+
+		return (filter_var('http://' . idn_to_ascii($fldValue), FILTER_VALIDATE_URL) !== false);
 	}
 }
 

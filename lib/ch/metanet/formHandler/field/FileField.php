@@ -12,6 +12,11 @@ use ch\metanet\formHandler\listener\FileFieldListener;
  * @version 1.0.0
  */
 class FileField extends FormField {
+	const VALUE_NAME = 'name';
+	const VALUE_TMP_NAME = 'tmp_name';
+	const VALUE_TYPE = 'type';
+	const VALUE_ERROR = 'error';
+	const VALUE_SIZE = 'size';
 
 	public function render() {
 		return '<input type="file" name="' . $this->name . '" id="' . $this->name . '">';
@@ -29,7 +34,6 @@ class FileField extends FormField {
 			if($l instanceof FileFieldListener === false)
 				continue;
 
-			/** @var FileFieldListener $l */
 			if($resCode === UPLOAD_ERR_OK) {
 				$l->onUploadSuccess($this->formHandler, $this);
 			} else {
@@ -38,6 +42,28 @@ class FileField extends FormField {
 		}
 
 		return true;
+	}
+
+	public function isValueEmpty() {
+		if(parent::isValueEmpty() === true)
+			return true;
+
+		if($this->value[self::VALUE_ERROR] === UPLOAD_ERR_NO_FILE)
+			return true;
+
+		return false;
+	}
+
+
+	/**
+	 * @param string|null $selector The data selector. NULL means the whole data array
+	 * @return string|array|null The selected field data
+	 */
+	public function getValue($selector = null) {
+		if($selector === null)
+			return $this->value;
+
+		return $this->value[$selector];
 	}
 }
 

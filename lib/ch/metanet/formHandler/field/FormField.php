@@ -2,6 +2,7 @@
 
 namespace ch\metanet\formHandler\field;
 
+use ch\metanet\formHandler\decorator\FieldValueDecorator;
 use ch\metanet\formHandler\FormHandler;
 use ch\metanet\formHandler\listener\FormFieldListener;
 use ch\metanet\formHandler\rule\Rule;
@@ -18,6 +19,7 @@ abstract class FormField {
 	protected $name;
 	protected $label;
 	protected $ruleSet;
+	protected $decorators;
 	protected $checked;
 	protected $errors;
 	protected $value;
@@ -123,6 +125,20 @@ abstract class FormField {
 	 */
 	public function addRule(Rule $rule) {
 		$this->ruleSet[] = $rule;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getDecorators() {
+		return $this->decorators;
+	}
+
+	/**
+	 * @param FieldValueDecorator $decorator
+	 */
+	public function addDecorator(FieldValueDecorator $decorator) {
+		$this->decorators[] = $decorator;
 	}
 
 	/**

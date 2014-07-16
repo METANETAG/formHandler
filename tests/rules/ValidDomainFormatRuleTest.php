@@ -43,7 +43,10 @@ class ValidDomainFormatRuleTest extends \PHPUnit_Framework_TestCase {
 		$this->assertSame($rule->validate($field), true, 'Valid domain ftp://abc.ch');
 
 		$field->setValue('fo://abc.ch');
-		$this->assertSame($rule->validate($field), true, 'Invalid domain fo://abc.ch');
+		$this->assertSame($rule->validate($field), true, 'Valid domain, invalid protocol: fo://abc.ch');
+
+		$field->setValue('www.abc.c');
+		$this->assertSame($rule->validate($field), false, 'Invalid TLD ending: www.abc.c');
 	}
 }
 

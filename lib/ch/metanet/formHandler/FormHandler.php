@@ -157,12 +157,10 @@ class FormHandler {
 	 * @param FormField $field The form field to add
 	 */
 	public function addField(FormField $field) {
-		if($this->isSent() === true) {
-			if(array_key_exists($field->getName(), $this->inputData) === true)
-				$field->setValue($this->inputData[$field->getName()]);
-			else
-				$field->setValue(null);
-		}
+		if(array_key_exists($field->getName(), $this->inputData) === true)
+			$field->setValue($this->inputData[$field->getName()]);
+		else
+			$field->setValue(null);
 
 		$field->setFormHandler($this);
 

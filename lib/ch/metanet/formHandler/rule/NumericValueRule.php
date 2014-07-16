@@ -16,6 +16,9 @@ class NumericValueRule extends Rule {
 	 * @return bool
 	 */
 	public function validate(FormField $field) {
+		if($field->isValueEmpty() === true)
+			return true;
+
 		return is_numeric($field->getValue());
 	}
 }

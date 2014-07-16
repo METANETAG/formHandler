@@ -54,7 +54,7 @@ class OptionsField extends FormField {
 			return $resCheck;
 		} elseif(is_array($this->value) === true) {
 			foreach($this->value as $val) {
-				if(array_key_exists($val, $this->options) === true)
+				if(is_scalar($val) === false || array_key_exists($val, $this->options) === true)
 					continue;
 
 				$this->addError($this->errorMessageInvalidOption);
