@@ -1,10 +1,10 @@
 <?php
+
 /**
  * @author Pascal Muenst <entwicklung@metanet.ch>
  * @copyright Copyright (c) 2014, METANET AG
  */
-
-require_once '../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 // Mock for idn_to_ascii function for PHPUnit 3.7
 if(function_exists('idn_to_ascii') === false) {
