@@ -78,6 +78,21 @@ class Form extends Collection {
 		
 		return $keyValueMap;
 	}
+
+	/**
+	 * Returns a connected form field of this form handler instance selected by its name
+	 * @param string $name The name of the connected form field
+	 * @throws \UnexpectedValueException If the component is not of type field
+	 * @return Field The form field
+	 */
+	public function getField($name) {
+		$component = $this->getComponent($name);
+
+		if($component instanceof Field === false)
+			throw new \UnexpectedValueException('The component with name "' . $name , '" is not of type Field but of type ' . get_class($component));
+
+		return $component;
+	}
 	
 	public function addField(Field $field) {
 		$this->addComponent($field);

@@ -79,36 +79,14 @@ class Collection extends Component {
 	/**
 	 * Returns a connected component of this form handler instance selected by its name
 	 * @param string $name The name of the component
-	 * @param int|null $index
 	 * @throws \OutOfBoundsException If the field does not exist
 	 * @return Component The component
 	 */
-	public function getComponent($name, $index = null) {
+	public function getComponent($name) {
 		if(isset($this->components[$name]) === false)
 			throw new \OutOfBoundsException('The field with name "' . $name . '" does not exist');
 
-		$component = $this->components[$name];
-		
-		if($component instanceof Component)
-			return $component;
-		
-		return $component[$index];
-	}
-
-	/**
-	 * Returns a connected form field of this form handler instance selected by its name
-	 * @param string $name The name of the connected form field
-	 * @param int|null $index
-	 * @throws \UnexpectedValueException If the component is not of type field
-	 * @return Field The form field
-	 */
-	public function getField($name, $index = null) {
-		$component = $this->getComponent($name, $index);
-
-		if($component instanceof Field === false)
-			throw new \UnexpectedValueException('The component with name "' . $name , '" is not of type Field');
-
-		return $component;
+		return $this->components[$name];
 	}
 	
 	public function render()
