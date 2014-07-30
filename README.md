@@ -18,12 +18,13 @@ Quick code example:
 ```php
 <?php
 
-$myFrom = new FormHandler();
+$myForm = new Form();
+$myForm->setInputData(array_merge($_GET, $_POST));
 
 $myField = new InputField('my_field', 'My field');
 $myField->addRule(new RequiredRule('Please insert a value for my field'));
 
-$myForm->addField($myField);
+$myForm->addComponent($myField);
 
 if($myForm->isSent() === true && $myForm->validate() === true) {
 	echo 'Form sent to the server and validated successfully!';
