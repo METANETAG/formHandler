@@ -10,7 +10,7 @@ use ch\metanet\formHandler\renderer\SelectDateFieldRenderer;
  * @copyright Copyright (c) 2014, METANET AG
  * @version 1.0.0
  */
-class DateField extends FormField {
+class DateField extends Field {
 	/** @var  DateFieldRenderer */
 	protected $dateFieldRenderer;
 	protected $allowedDateFormats;
@@ -35,7 +35,10 @@ class DateField extends FormField {
 	}
 
 	public function render() {
-		return '<div class="form-date">' . $this->dateFieldRenderer->render($this) . '</div>';
+		return $this->fieldComponentRenderer->render(
+			$this,
+			'<div class="form-date">' . $this->dateFieldRenderer->render($this) . '</div>'
+		);
 	}
 
 	public function validate() {

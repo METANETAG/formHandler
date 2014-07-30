@@ -11,8 +11,13 @@ use ch\metanet\formHandler\field\InputField;
  */
 class TextInputFieldRenderer extends InputFieldRenderer {
 	public function render(InputField $field) {
-		return '<input type="text" name="' . $field->getName() . '" id="' . $field->getName() . '" value="' . $field->getValue() . '">';
+		$required = null;
+
+		if($field->hasRule('ch\metanet\formHandler\rule\RequiredRule'))
+			$required = ' required';
+		
+		return '<input type="text" name="' . $field->getFormIdentifierAsString() . '" id="' . $field->getId() . '" value="' . $field->getValue() . '"' . $required . '>';
 	}
 }
 
-/* EOF */ 
+/* EOF */

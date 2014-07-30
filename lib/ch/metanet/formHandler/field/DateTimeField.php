@@ -42,7 +42,10 @@ class DateTimeField extends DateField {
 	}
 
 	public function render() {
-		return '<div class="form-date">' . $this->dateFieldRenderer->render($this) . (($this->timeFieldRenderer !== null)?$this->timeFieldRenderer->render($this):null) . '</div>';
+		return $this->fieldComponentRenderer->render(
+			$this,
+			'<div class="form-date">' . $this->dateFieldRenderer->render($this) . (($this->timeFieldRenderer !== null)?$this->timeFieldRenderer->render($this):null) . '</div>'
+		);
 	}
 
 	public function isValueEmpty() {

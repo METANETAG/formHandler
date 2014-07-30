@@ -2,8 +2,9 @@
 
 namespace ch\metanet\formHandler\listener;
 
-use ch\metanet\formHandler\field\FormField;
-use ch\metanet\formHandler\FormHandler;
+use ch\metanet\formHandler\component\Component;
+use ch\metanet\formHandler\component\Form;
+use ch\metanet\formHandler\field\Field;
 
 /**
  * @author Pascal Muenst <entwicklung@metanet.ch>
@@ -12,50 +13,50 @@ use ch\metanet\formHandler\FormHandler;
  */
 abstract class FormFieldListener {
 	/**
-	 * @param FormHandler $formHandler
-	 * @param FormField $field
+	 * @param Form $formHandler
+	 * @param Component $component
 	 */
-	public function onEmptyValueBeforeValidation(FormHandler $formHandler, FormField $field) {
+	public function onEmptyValueBeforeValidation(Form $formHandler, Component $component) {
 
 	}
 
 	/**
-	 * @param FormHandler $formHandler
-	 * @param FormField $field
+	 * @param Form $formHandler
+	 * @param Component $component
 	 */
-	public function onEmptyValueAfterValidation(FormHandler $formHandler, FormField $field) {
+	public function onEmptyValueAfterValidation(Form $formHandler, Component $component) {
 
 	}
 
 	/**
-	 * @param FormHandler $formHandler
-	 * @param FormField $field
+	 * @param Form $formHandler
+	 * @param Component $component
 	 */
-	public function onNotEmptyValueBeforeValidation(FormHandler $formHandler, FormField $field) {
+	public function onNotEmptyValueBeforeValidation(Form $formHandler, Component $component) {
 
 	}
 
 	/**
-	 * @param FormHandler $formHandler
-	 * @param FormField $field
+	 * @param Form $formHandler
+	 * @param Component $component
 	 */
-	public function onNotEmptyValueAfterValidation(FormHandler $formHandler, FormField $field) {
+	public function onNotEmptyValueAfterValidation(Form $formHandler, Component $component) {
 
 	}
 
 	/**
-	 * @param FormHandler $formHandler
-	 * @param FormField $field
+	 * @param Form $formHandler
+	 * @param Component $component
 	 */
-	public function onValidationError(FormHandler $formHandler, FormField $field) {
+	public function onValidationError(Form $formHandler, Component $component) {
 
 	}
 
 	/**
-	 * @param FormHandler $formHandler
-	 * @param FormField $field
+	 * @param Form $formHandler
+	 * @param Field $field
 	 */
-	public function onValidationSuccess(FormHandler $formHandler, FormField $field) {
+	public function onValidationSuccess(Form $formHandler, Field $field) {
 
 	}
 }

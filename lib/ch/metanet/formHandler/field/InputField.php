@@ -10,7 +10,7 @@ use ch\metanet\formHandler\renderer\InputFieldRenderer;
  * @copyright Copyright (c) 2014, METANET AG
  * @version 1.0.0
  */
-class InputField extends FormField {
+class InputField extends Field {
 	protected $inputFieldRenderer;
 
 	public function __construct($name, $label, array $ruleSet = array()) {
@@ -20,7 +20,7 @@ class InputField extends FormField {
 	}
 
 	public function render() {
-		return $this->inputFieldRenderer->render($this);
+		return $this->fieldComponentRenderer->render($this, $this->inputFieldRenderer->render($this));
 	}
 
 	/**

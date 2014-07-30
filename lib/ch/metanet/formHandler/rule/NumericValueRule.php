@@ -2,7 +2,7 @@
 
 
 namespace ch\metanet\formHandler\rule;
-use ch\metanet\formHandler\field\FormField;
+use ch\metanet\formHandler\field\Field;
 
 
 /**
@@ -12,10 +12,10 @@ use ch\metanet\formHandler\field\FormField;
  */
 class NumericValueRule extends Rule {
 	/**
-	 * @param FormField $field The field instance to check against
+	 * @param Field $field The field instance to check against
 	 * @return bool
 	 */
-	public function validate(FormField $field) {
+	public function validate(Field $field) {
 		if($field->isValueEmpty() === true)
 			return true;
 

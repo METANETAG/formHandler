@@ -3,7 +3,7 @@
 namespace ch\metanet\formHandler\listener;
 
 use ch\metanet\formHandler\field\FileField;
-use ch\metanet\formHandler\FormHandler;
+use ch\metanet\formHandler\FormComponent;
 
 /**
  * @author Pascal Muenst <entwicklung@metanet.ch>
@@ -12,18 +12,18 @@ use ch\metanet\formHandler\FormHandler;
  */
 class FileFieldListener extends FormFieldListener {
 	/**
-	 * @param FormHandler $formHandler
+	 * @param FormComponent $formHandler
 	 * @param FileField $field
 	 */
-	public function onUploadSuccess(FormHandler $formHandler, FileField $field) {
+	public function onUploadSuccess(FormComponent $formHandler, FileField $field) {
 
 	}
 
 	/**
-	 * @param FormHandler $formHandler
+	 * @param FormComponent $formHandler
 	 * @param FileField $file
 	 */
-	public function onUploadFail(FormHandler $formHandler, FileField $file) {
+	public function onUploadFail(FormComponent $formHandler, FileField $file) {
 
 	}
 }

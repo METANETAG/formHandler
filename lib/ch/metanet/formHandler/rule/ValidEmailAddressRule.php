@@ -2,7 +2,7 @@
 
 
 namespace ch\metanet\formHandler\rule;
-use ch\metanet\formHandler\field\FormField;
+use ch\metanet\formHandler\field\Field;
 
 
 /**
@@ -20,10 +20,10 @@ class ValidEmailAddressRule  extends Rule {
 	}
 
 	/**
-	 * @param FormField $field
+	 * @param Field $field
 	 * @return bool
 	 */
-	public function validate(FormField $field) {
+	public function validate(Field $field) {
 		if($field->isValueEmpty() === true)
 			return true;
 

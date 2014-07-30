@@ -10,7 +10,7 @@ use ch\metanet\formHandler\renderer\SelectOptionsFieldRenderer;
  * @copyright Copyright (c) 2014, METANET AG
  * @version 1.0.0
  */
-class OptionsField extends FormField {
+class OptionsField extends Field {
 	protected $options;
 	protected $optionsFieldRenderer;
 	protected $errorMessageInvalidOption;
@@ -31,7 +31,7 @@ class OptionsField extends FormField {
 	}
 
 	public function render() {
-		return $this->optionsFieldRenderer->render($this);
+		return $this->fieldComponentRenderer->render($this, $this->optionsFieldRenderer->render($this));
 	}
 
 	/**

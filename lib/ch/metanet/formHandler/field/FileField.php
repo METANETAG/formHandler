@@ -1,9 +1,7 @@
 <?php
 
-
 namespace ch\metanet\formHandler\field;
 
-use ch\metanet\formHandler\FormFieldListener;
 use ch\metanet\formHandler\listener\FileFieldListener;
 
 /**
@@ -11,7 +9,7 @@ use ch\metanet\formHandler\listener\FileFieldListener;
  * @copyright Copyright (c) 2014, METANET AG
  * @version 1.0.0
  */
-class FileField extends FormField {
+class FileField extends Field {
 	const VALUE_NAME = 'name';
 	const VALUE_TMP_NAME = 'tmp_name';
 	const VALUE_TYPE = 'type';
@@ -19,7 +17,10 @@ class FileField extends FormField {
 	const VALUE_SIZE = 'size';
 
 	public function render() {
-		return '<input type="file" name="' . $this->name . '" id="' . $this->name . '">';
+		return $this->fieldComponentRenderer->render(
+			$this,
+			'<input type="file" name="' . $this->name . '" id="' . $this->name . '">'
+		);
 	}
 
 	public function validate() {
@@ -34,6 +35,8 @@ class FileField extends FormField {
 			if($l instanceof FileFieldListener === false)
 				continue;
 
+			/** @var FileFieldListener $l */
+			
 			if($resCode === UPLOAD_ERR_OK) {
 				$l->onUploadSuccess($this->formHandler, $this);
 			} else {

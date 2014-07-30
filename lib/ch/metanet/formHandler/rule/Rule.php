@@ -1,7 +1,7 @@
 <?php
 
 namespace ch\metanet\formHandler\rule;
-use ch\metanet\formHandler\field\FormField;
+use ch\metanet\formHandler\field\Field;
 
 /**
  * @author Pascal Muenst <entwicklung@metanet.ch>
@@ -16,10 +16,10 @@ abstract class Rule {
 	}
 
 	/**
-	 * @param FormField $field The field instance to check against
+	 * @param Field $field The field instance to check against
 	 * @return bool
 	 */
-	public abstract function validate(FormField $field);
+	public abstract function validate(Field $field);
 
 	/**
 	 * @param string $errorMessage
@@ -34,10 +34,6 @@ abstract class Rule {
 	 */
 	public function getErrorMessage() {
 		return $this->errorMessage;
-	}
-
-	public static function getClassName() {
-		return get_called_class();
 	}
 }
 

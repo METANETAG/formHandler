@@ -11,7 +11,12 @@ use ch\metanet\formHandler\field\InputField;
  */
 class EmailInputFieldRenderer extends InputFieldRenderer {
 	public function render(InputField $field) {
-		return '<input type="email" name="' . $field->getName() . '" id="' . $field->getName() . '" value="' . $field->getValue() . '">';
+		$required = null;
+		
+		if($field->hasRule('ch\metanet\formHandler\rule\RequiredRule'))
+			$required = ' required';
+		
+		return '<input type="email" name="' . $field->getFormIdentifierAsString() . '" id="' . $field->getId() . '" value="' . $field->getValue() . '"' . $required . '>';
 	}
 }
 

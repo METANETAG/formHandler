@@ -3,7 +3,7 @@
 
 namespace ch\metanet\formHandler\rule;
 
-use ch\metanet\formHandler\field\FormField;
+use ch\metanet\formHandler\field\Field;
 
 /**
  * @author Pascal Muenst <entwicklung@metanet.ch>
@@ -12,11 +12,11 @@ use ch\metanet\formHandler\field\FormField;
  */
 class RequiredRule extends Rule {
 	/**
-	 * @param FormField $field
+	 * @param Field $field
 	 * @return bool|mixed
 	 * @throws \UnexpectedValueException
 	 */
-	public function validate(FormField $field) {
+	public function validate(Field $field) {
 		return !$field->isValueEmpty();
 	}
 }

@@ -6,7 +6,7 @@
  */
 require_once __DIR__ . '/../vendor/autoload.php';
 
-// Mock for idn_to_ascii function for PHPUnit 3.7
+// Mock for idn_to_ascii function for PHP bins compiled without the --intl flag
 if(function_exists('idn_to_ascii') === false) {
 	echo 'Mocked up function: idn_to_ascii' , PHP_EOL;
 

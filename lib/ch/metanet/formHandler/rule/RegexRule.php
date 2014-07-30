@@ -2,7 +2,7 @@
 
 namespace ch\metanet\formHandler\rule;
 
-use ch\metanet\formHandler\field\FormField;
+use ch\metanet\formHandler\field\Field;
 
 /**
  * @author Pascal Muenst <entwicklung@metanet.ch>
@@ -23,11 +23,11 @@ class RegexRule extends Rule {
 	}
 
 	/**
-	 * @param FormField $field The field instance to check against
+	 * @param Field $field The field instance to check against
 	 * @throws \UnexpectedValueException
 	 * @return bool
 	 */
-	public function validate(FormField $field) {
+	public function validate(Field $field) {
 		if($field->isValueEmpty() === true)
 			return true;
 
