@@ -49,15 +49,14 @@ class Collection extends Component {
 	}
 
 	/**
-	 * Connects a field with the form handler instance
-	 * @param Component $component The form field to add
+	 * Connects a component with the form handler instance
+	 * @param Component $component The form component to add
 	 */
 	public function addComponent(Component $component)
 	{
 		$component->setParentComponent($this);
 		$component->setFormComponent($this->formComponent);
-
-		// Single field
+		
 		$this->components[$component->getName()] = $component;
 
 		// Set value if there is one
@@ -68,8 +67,8 @@ class Collection extends Component {
 	}
 
 	/**
-	 * Returns all connected fields for this form handler instance
-	 * @return array All connected fields of this form handler instance
+	 * Returns all connected components for this form handler instance
+	 * @return array All connected components of this form handler instance
 	 */
 	public function getComponents()
 	{
@@ -79,12 +78,12 @@ class Collection extends Component {
 	/**
 	 * Returns a connected component of this form handler instance selected by its name
 	 * @param string $name The name of the component
-	 * @throws \OutOfBoundsException If the field does not exist
+	 * @throws \OutOfBoundsException If the component does not exist
 	 * @return Component The component
 	 */
 	public function getComponent($name) {
 		if(isset($this->components[$name]) === false)
-			throw new \OutOfBoundsException('The field with name "' . $name . '" does not exist');
+			throw new \OutOfBoundsException('The component with name "' . $name . '" does not exist');
 
 		return $this->components[$name];
 	}
@@ -108,28 +107,14 @@ class Collection extends Component {
 		
 		foreach($this->components as $component) {
 			/** @var Component $component */
-			if($component->validate() === false) {
-				$validation = false;
-				$this->errors = array_merge($this->errors, $component->getErrors());
-			}
-
-			$this->invokeListeners($component);
+			if($component->validate() === true)
+				continue;
+			
+			$validation = false;
+			$this->errors = array_merge($this->errors, $component->getErrors());
 		}
 		
 		return $validation;
-	}
-	
-	protected function invokeListeners(Component $component) {
-		$isValueEmpty = $component->isValueEmpty();
-		
-		foreach($component->getListeners() as $l) {
-			/** @var FormFieldListener $l */
-			if($isValueEmpty === true) {
-				$l->onEmptyValueAfterValidation($this->formComponent, $component);
-			} else {
-				$l->onNotEmptyValueAfterValidation($this->formComponent, $component);
-			}
-		}
 	}
 
 	public function isValueEmpty()
@@ -137,7 +122,7 @@ class Collection extends Component {
 		$validation = true;
 
 		foreach($this->components as $component) {
-			/** @var Component $component */
+			/** @var Field $component */
 			if($component->isValueEmpty() === false)
 				$validation = false;
 		}
@@ -156,7 +141,7 @@ class Collection extends Component {
 		
 		// Delegate values
 		foreach($this->components as $component) {
-			/** @var Component $component */
+			/** @var Field $component */
 			if(array_key_exists($component->getName(), $data) === false)
 				continue;
 			
@@ -170,7 +155,7 @@ class Collection extends Component {
 	public function hasErrors()
 	{
 		foreach($this->components as $component) {
-			/** @var Component $component */
+			/** @var Field $component */
 			if($component->hasErrors() === true)
 				return true;
 		}
@@ -186,7 +171,7 @@ class Collection extends Component {
 		$errors = array();
 
 		foreach($this->components as $component) {
-			/** @var Component $component */
+			/** @var Field $component */
 			$errors = array_merge($errors, $component->getErrors());
 		}
 		

@@ -105,7 +105,7 @@ class Form extends Collection {
 	/**
 	 * @param FormComponentRenderer $formComponentRenderer
 	 */
-	public function setCollectionComponentRenderer(FormComponentRenderer $formComponentRenderer) {
+	public function setFormComponentRenderer(FormComponentRenderer $formComponentRenderer) {
 		$this->collectionComponentRenderer = $formComponentRenderer;
 	}
 

@@ -19,7 +19,7 @@ class FileField extends Field {
 	public function render() {
 		return $this->fieldComponentRenderer->render(
 			$this,
-			'<input type="file" name="' . $this->name . '" id="' . $this->name . '">'
+			'<input type="file" name="' . $this->getFormIdentifierAsString() . '" id="' . $this->name . '">'
 		);
 	}
 

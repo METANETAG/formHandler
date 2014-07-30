@@ -5,6 +5,7 @@ namespace ch\metanet\formHandler\field;
 use ch\metanet\formHandler\component\Component;
 use ch\metanet\formHandler\component\Form;
 use ch\metanet\formHandler\decorator\FieldValueDecorator;
+use ch\metanet\formHandler\listener\FormFieldListener;
 use ch\metanet\formHandler\renderer\DefaultFieldComponentRenderer;
 use ch\metanet\formHandler\renderer\FieldComponentRenderer;
 use ch\metanet\formHandler\rule\Rule;
@@ -60,6 +61,17 @@ abstract class Field extends Component {
 		}
 
 		$this->validated = true;
+
+		$isValueEmpty = $this->isValueEmpty();
+
+		foreach($this->listeners as $l) {
+			/** @var FormFieldListener $l */
+			if($isValueEmpty === true) {
+				$l->onEmptyValueAfterValidation($this->formComponent, $this);
+			} else {
+				$l->onNotEmptyValueAfterValidation($this->formComponent, $this);
+			}
+		}
 
 		return !$this->hasErrors();
 	}

@@ -2,7 +2,6 @@
 
 namespace ch\metanet\formHandler\listener;
 
-use ch\metanet\formHandler\component\Component;
 use ch\metanet\formHandler\component\Form;
 use ch\metanet\formHandler\field\Field;
 
@@ -14,41 +13,41 @@ use ch\metanet\formHandler\field\Field;
 abstract class FormFieldListener {
 	/**
 	 * @param Form $formHandler
-	 * @param Component $component
+	 * @param Field $component
 	 */
-	public function onEmptyValueBeforeValidation(Form $formHandler, Component $component) {
+	public function onEmptyValueBeforeValidation(Form $formHandler, Field $component) {
 
 	}
 
 	/**
 	 * @param Form $formHandler
-	 * @param Component $component
+	 * @param Field $component
 	 */
-	public function onEmptyValueAfterValidation(Form $formHandler, Component $component) {
+	public function onEmptyValueAfterValidation(Form $formHandler, Field $component) {
 
 	}
 
 	/**
 	 * @param Form $formHandler
-	 * @param Component $component
+	 * @param Field $component
 	 */
-	public function onNotEmptyValueBeforeValidation(Form $formHandler, Component $component) {
+	public function onNotEmptyValueBeforeValidation(Form $formHandler, Field $component) {
 
 	}
 
 	/**
 	 * @param Form $formHandler
-	 * @param Component $component
+	 * @param Field $component
 	 */
-	public function onNotEmptyValueAfterValidation(Form $formHandler, Component $component) {
+	public function onNotEmptyValueAfterValidation(Form $formHandler, Field $component) {
 
 	}
 
 	/**
 	 * @param Form $formHandler
-	 * @param Component $component
+	 * @param Field $component
 	 */
-	public function onValidationError(Form $formHandler, Component $component) {
+	public function onValidationError(Form $formHandler, Field $component) {
 
 	}
 
