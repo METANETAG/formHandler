@@ -16,6 +16,7 @@ class CheckboxOptionsFieldRenderer extends OptionsFieldRenderer {
 	 * @return string
 	 */
 	public function render(OptionsField $field) {
+		$required = ($field->hasRule('ch\metanet\formHandler\rule\RequiredRule') === true)?' required':null;
 		$optionsCount = count($field->getOptions());
 
 		$fieldValue = is_array($field->getValue())?$field->getValue():array();
@@ -26,7 +27,7 @@ class CheckboxOptionsFieldRenderer extends OptionsFieldRenderer {
 			$attrId = ' id="' . (($optionsCount === 1)?$field->getName():$field->getName() . '-' . $key) . '"';
 
 			$checked = in_array($key, $fieldValue)?' checked':null;
-			$html .= '<li><label><input type="checkbox" name="' . $fieldName . '" value="' . $key . '"' . $attrId . $checked . '> ' . $val . '</label></li>';
+			$html .= '<li><label><input type="checkbox" name="' . $fieldName . '" value="' . $key . '"' . $attrId . $checked . $required . '> ' . $val . '</label></li>';
 		}
 
 		$html .= '</ul>';

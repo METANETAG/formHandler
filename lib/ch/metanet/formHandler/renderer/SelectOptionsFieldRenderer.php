@@ -16,7 +16,9 @@ class SelectOptionsFieldRenderer extends OptionsFieldRenderer {
 	 * @return string The HTML of the rendered select field
 	 */
 	public function render(OptionsField $field) {
-		$html = '<select name="' . $field->getName() . '" id="' . $field->getName() . '"' . ((count($field->getCssClasses()) > 0)?' class="' . implode(' ', $field->getCssClasses()). '"':null) . '>';
+		$required = ($field->hasRule('ch\metanet\formHandler\rule\RequiredRule') === true)?' required':null;
+		
+		$html = '<select name="' . $field->getName() . '" id="' . $field->getName() . '"' . ((count($field->getCssClasses()) > 0)?' class="' . implode(' ', $field->getCssClasses()). '"':null) . $required . '>';
 
 		foreach($field->getOptions() as $key => $val) {
 			$selected = ($key == $field->getValue())?' selected':null;

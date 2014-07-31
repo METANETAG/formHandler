@@ -16,12 +16,13 @@ class RadioOptionsFieldRenderer extends OptionsFieldRenderer {
 	 * @throws \UnexpectedValueException
 	 */
 	public function render(OptionsField $field) {
+		$required = ($field->hasRule('ch\metanet\formHandler\rule\RequiredRule') === true)?' required':null;
 		$html = '<ul' . ((count($field->getCssClasses()) > 0)?' class="' . implode(' ', $field->getCssClasses()). '"':null) . '>';
 
 		foreach($field->getOptions() as $key => $val) {
 			$attrId = ' id="' . $field->getName() . '-' . $key . '"';
 			$checked = ($key == $field->getValue())?' checked':null;
-			$html .= '<li><label><input type="radio" name="' . $field->getName() . '" value="' . $key . '"' . $attrId . $checked . '> ' . $val . '</label></li>';
+			$html .= '<li><label><input type="radio" name="' . $field->getName() . '" value="' . $key . '"' . $attrId . $checked . $required . '> ' . $val . '</label></li>';
 		}
 
 		$html .= '</ul>';
