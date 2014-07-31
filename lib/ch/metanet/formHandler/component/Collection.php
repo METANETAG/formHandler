@@ -62,7 +62,7 @@ class Collection extends Component {
 		// Set value if there is one
 		if(array_key_exists($component->getName(), $this->inputData) === true)
 			$component->setInputData($this->inputData[$component->getName()]);
-		else
+		elseif($component->isValueEmpty() === true)
 			$component->setInputData(null);
 	}
 
