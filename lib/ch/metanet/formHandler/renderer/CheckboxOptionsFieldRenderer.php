@@ -16,7 +16,7 @@ class CheckboxOptionsFieldRenderer extends OptionsFieldRenderer {
 	 * @return string
 	 */
 	public function render(OptionsField $field) {
-		$required = ($field->hasRule('ch\metanet\formHandler\rule\RequiredRule') === true)?' required':null;
+		$required = ($field->hasRule('ch\metanet\formHandler\rule\RequiredRule') === true)?' aria-required="true"':null;
 		$optionsCount = count($field->getOptions());
 
 		$fieldValue = is_array($field->getValue())?$field->getValue():array();

@@ -16,7 +16,7 @@ class RadioOptionsFieldRenderer extends OptionsFieldRenderer {
 	 * @throws \UnexpectedValueException
 	 */
 	public function render(OptionsField $field) {
-		$required = ($field->hasRule('ch\metanet\formHandler\rule\RequiredRule') === true)?' required':null;
+		$required = ($field->hasRule('ch\metanet\formHandler\rule\RequiredRule') === true)?' aria-required="true"':null;
 		$html = '<ul' . ((count($field->getCssClasses()) > 0)?' class="' . implode(' ', $field->getCssClasses()). '"':null) . '>';
 
 		foreach($field->getOptions() as $key => $val) {
