@@ -35,10 +35,8 @@ class MinLengthRule extends Rule {
 
 		if(is_scalar($fieldValue) === true)
 			return $this->checkValueLengthAgainst(mb_strlen($fieldValue));
-		elseif(is_array($fieldValue) === true)
+		elseif(is_array($fieldValue) === true || $fieldValue instanceof \ArrayObject)
 			return $this->checkValueLengthAgainst(count($fieldValue));
-		elseif($fieldValue instanceof \ArrayObject)
-			return $this->checkValueLengthAgainst($fieldValue->count());
 		else
 			throw new \UnexpectedValueException('Could not handle field value for rule ' . __CLASS__);
 	}
