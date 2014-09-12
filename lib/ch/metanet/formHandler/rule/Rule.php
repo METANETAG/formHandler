@@ -11,7 +11,7 @@ use ch\metanet\formHandler\field\Field;
 abstract class Rule {
 	protected $errorMessage;
 
-	function __construct($errorMessage) {
+	public function __construct($errorMessage) {
 		$this->errorMessage = $errorMessage;
 	}
 
