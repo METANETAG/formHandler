@@ -23,7 +23,6 @@ abstract class Field extends Component {
 	protected $validated;
 	
 	protected $value;
-	protected $cssClasses;
 	protected $linkedLabel;
 
 	protected $errors;
@@ -45,7 +44,6 @@ abstract class Field extends Component {
 		$this->errors = array();
 		$this->validated = false;
 		$this->value = null;
-		$this->cssClasses = array();
 		$this->linkedLabel = true;
 		
 		$this->fieldComponentRenderer = new DefaultFieldComponentRenderer();
@@ -193,27 +191,6 @@ abstract class Field extends Component {
 	 */
 	public function getValidated() {
 		return $this->validated;
-	}
-
-	/**
-	 * @return array
-	 */
-	public function getCssClasses() {
-		return $this->cssClasses;
-	}
-
-	/**
-	 * @param array $cssClasses
-	 */
-	public function setCssClasses(array $cssClasses) {
-		$this->cssClasses = $cssClasses;
-	}
-
-	/**
-	 * @param string $cssClass
-	 */
-	public function addCssClass($cssClass) {
-		$this->cssClasses[] = $cssClass;
 	}
 
 	/**

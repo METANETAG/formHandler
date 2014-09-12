@@ -18,7 +18,7 @@ class SelectOptionsFieldRenderer extends OptionsFieldRenderer {
 	public function render(OptionsField $field) {
 		$required = ($field->hasRule('ch\metanet\formHandler\rule\RequiredRule') === true)?' aria-required="true"':null;
 		
-		$html = '<select name="' . $field->getName() . '" id="' . $field->getName() . '"' . ((count($field->getCssClasses()) > 0)?' class="' . implode(' ', $field->getCssClasses()). '"':null) . $required . '>';
+		$html = '<select name="' . $field->getName() . '" id="' . $field->getName() . '"' . $this->getAttributesAsHtml() . $required . '>';
 
 		foreach($field->getOptions() as $key => $val) {
 			$selected = ($key == $field->getValue())?' selected':null;

@@ -16,7 +16,7 @@ class TextInputFieldRenderer extends InputFieldRenderer {
 		if($field->hasRule('ch\metanet\formHandler\rule\RequiredRule'))
 			$required = ' aria-required="true"';
 		
-		return '<input type="text" name="' . $field->getFormIdentifierAsString() . '" id="' . $field->getId() . '" value="' . htmlspecialchars($field->getValue()) . '"' . $required . '>';
+		return '<input type="text" name="' . $field->getFormIdentifierAsString() . '" id="' . $field->getId() . '" value="' . htmlspecialchars($field->getValue()) . '"' . $this->getAttributesAsHtml() . $required . '>';
 	}
 }
 

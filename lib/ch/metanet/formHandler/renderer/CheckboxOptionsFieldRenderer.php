@@ -20,7 +20,7 @@ class CheckboxOptionsFieldRenderer extends OptionsFieldRenderer {
 		$optionsCount = count($field->getOptions());
 
 		$fieldValue = is_array($field->getValue())?$field->getValue():array();
-		$html = '<ul' . ((count($field->getCssClasses()) > 0)?' class="' . implode(' ', $field->getCssClasses()). '"':null) . '>';
+		$html = '<ul' . $this->getAttributesAsHtml() . '>';
 		$fieldName = ($optionsCount === 1)?$field->getName():$field->getName() . '[]';
 
 		foreach($field->getOptions() as $key => $val) {

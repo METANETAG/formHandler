@@ -21,7 +21,8 @@ class OptionsField extends Field {
 	 * @param array $options
 	 * @param array $ruleSet
 	 */
-	public function __construct($name, $label, array $options, array $ruleSet = array()) {
+	public function __construct($name, $label, array $options, array $ruleSet = array())
+	{
 		parent::__construct($name, $label, $ruleSet);
 
 		$this->options = $options;
@@ -30,14 +31,16 @@ class OptionsField extends Field {
 		$this->errorMessageInvalidOption = 'Please choose a valid option';
 	}
 
-	public function render() {
+	public function render()
+	{
 		return $this->fieldComponentRenderer->render($this, $this->optionsFieldRenderer->render($this));
 	}
 
 	/**
 	 * @return bool
 	 */
-	public function validate() {
+	public function validate()
+	{
 		if($this->isValueEmpty() === false) {
 			if($this->validateAgainstOptions() === false)
 				return false;
@@ -46,7 +49,8 @@ class OptionsField extends Field {
 		return parent::validate();
 	}
 
-	protected function validateAgainstOptions() {
+	protected function validateAgainstOptions()
+	{
 		if(is_scalar($this->value) === true) {
 			if(($resCheck = array_key_exists($this->value, $this->options)) === false)
 				$this->addError($this->errorMessageInvalidOption);
@@ -69,9 +73,18 @@ class OptionsField extends Field {
 	}
 
 	/**
+	 * @return OptionsFieldRenderer
+	 */
+	public function getOptionsFieldRenderer()
+	{
+		return $this->optionsFieldRenderer;
+	}
+
+	/**
 	 * @param OptionsFieldRenderer $optionsFieldRenderer
 	 */
-	public function setOptionsFieldRenderer(OptionsFieldRenderer $optionsFieldRenderer) {
+	public function setOptionsFieldRenderer(OptionsFieldRenderer $optionsFieldRenderer)
+	{
 		$this->optionsFieldRenderer = $optionsFieldRenderer;
 	}
 
@@ -79,21 +92,24 @@ class OptionsField extends Field {
 	 * The
 	 * @param array $options
 	 */
-	public function setOptions($options) {
+	public function setOptions($options)
+	{
 		$this->options = $options;
 	}
 
 	/**
 	 * @return array
 	 */
-	public function getOptions() {
+	public function getOptions()
+	{
 		return $this->options;
 	}
 
 	/**
 	 * @param string $errorMessageInvalidOption
 	 */
-	public function setErrorMessageInvalidOption($errorMessageInvalidOption) {
+	public function setErrorMessageInvalidOption($errorMessageInvalidOption)
+	{
 		$this->errorMessageInvalidOption = $errorMessageInvalidOption;
 	}
 }

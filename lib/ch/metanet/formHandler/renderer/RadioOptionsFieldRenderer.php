@@ -17,7 +17,7 @@ class RadioOptionsFieldRenderer extends OptionsFieldRenderer {
 	 */
 	public function render(OptionsField $field) {
 		$required = ($field->hasRule('ch\metanet\formHandler\rule\RequiredRule') === true)?' aria-required="true"':null;
-		$html = '<ul' . ((count($field->getCssClasses()) > 0)?' class="' . implode(' ', $field->getCssClasses()). '"':null) . '>';
+		$html = '<ul' . $this->getAttributesAsHtml() . '>';
 
 		foreach($field->getOptions() as $key => $val) {
 			$attrId = ' id="' . $field->getName() . '-' . $key . '"';

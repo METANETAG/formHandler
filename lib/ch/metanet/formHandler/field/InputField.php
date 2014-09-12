@@ -24,6 +24,14 @@ class InputField extends Field {
 	}
 
 	/**
+	 * @return InputFieldRenderer
+	 */
+	public function getInputFieldRenderer()
+	{
+		return $this->inputFieldRenderer;
+	}
+
+	/**
 	 * @param InputFieldRenderer $inputFieldRenderer
 	 */
 	public function setInputFieldRenderer(InputFieldRenderer $inputFieldRenderer) {

@@ -14,7 +14,7 @@ class AttributesOptionsFieldRenderer extends OptionsFieldRenderer {
 	 * @return string The rendered field
 	 */
 	public function render(OptionsField $field) {
-		$html = '<ul>';
+		$html = '<ul' . $this->getAttributesAsHtml() . '>';
 
 		$fieldName = $field->getName();
 		$fieldValue = $field->getValue();
