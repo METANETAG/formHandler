@@ -25,7 +25,7 @@ class NumberInputFieldRenderer extends InputFieldRenderer {
 		$maxAttr = ($this->max !== null)?' max="' . $this->max . '"':null;
 		$stepAttr = ($this->step !== null)?' step="' . $this->step . '"':null;
 
-		return '<input type="number" name="' . $field->getName() . '" id="' . $field->getName() . '" value="' . $field->getValue() . '"' . $minAttr . $maxAttr . $stepAttr . '>';
+		return '<input type="number" name="' . $field->getName() . '" id="' . $field->getName() . '" value="' . htmlspecialchars($field->getValue()) . '"' . $minAttr . $maxAttr . $stepAttr . '>';
 	}
 }
 

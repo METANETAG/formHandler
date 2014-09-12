@@ -11,7 +11,7 @@ use ch\metanet\formHandler\field\InputField;
  */
 class TextareaInputFieldRenderer extends InputFieldRenderer {
 	public function render(InputField $field) {
-		return '<textarea name="' . $field->getName() . '" id="' . $field->getName() . '">' . $field->getValue() . '</textarea>';
+		return '<textarea name="' . $field->getName() . '" id="' . $field->getName() . '">' . htmlspecialchars($field->getValue()) . '</textarea>';
 	}
 }
 

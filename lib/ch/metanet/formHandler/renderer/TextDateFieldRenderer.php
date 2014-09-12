@@ -19,7 +19,7 @@ class TextDateFieldRenderer extends DateFieldRenderer {
 			$field->setValue(null);
 		}
 
-		return '<input type="text" value="' . $field->getValue() . '" name="' . $field->getName() . '" id="' . $field->getName() . '">';
+		return '<input type="text" value="' . htmlspecialchars($field->getValue()) . '" name="' . $field->getName() . '" id="' . $field->getName() . '">';
 	}
 }
 
