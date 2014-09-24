@@ -39,7 +39,23 @@ class ValidEmailAddressRule  extends Rule {
 		$domain = substr($fieldValue, strrpos($fieldValue, '@') + 1);
 		$mxRecords = array();
 
-		return getmxrr(idn_to_ascii($domain), $mxRecords);
+		if(getmxrr(idn_to_ascii($domain), $mxRecords) === true)
+			return true;
+
+		// Port 25 fallback check if there's no MX record
+		$aRecords = dns_get_record($domain, DNS_A);
+
+		if(count($aRecords) <= 0)
+			return false;
+
+		$connection = @fsockopen($aRecords[0]['ip'], 25);
+
+		if(is_resource($connection) === true) {
+			fclose($connection);
+			return true;
+		}
+
+		return false;
 	}
 }
 
