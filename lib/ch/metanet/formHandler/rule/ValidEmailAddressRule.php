@@ -10,10 +10,12 @@ use ch\metanet\formHandler\field\Field;
  * @copyright Copyright (c) 2014, METANET AG
  * @version 1.0.0
  */
-class ValidEmailAddressRule  extends Rule {
+class ValidEmailAddressRule extends Rule
+{
 	protected $checkMx;
 
-	function __construct($errorMessage, $checkMx = true) {
+	function __construct($errorMessage, $checkMx = true)
+	{
 		parent::__construct($errorMessage);
 
 		$this->checkMx = $checkMx;
@@ -23,7 +25,8 @@ class ValidEmailAddressRule  extends Rule {
 	 * @param Field $field
 	 * @return bool
 	 */
-	public function validate(Field $field) {
+	public function validate(Field $field)
+	{
 		if($field->isValueEmpty() === true)
 			return true;
 
@@ -39,7 +42,7 @@ class ValidEmailAddressRule  extends Rule {
 		$domain = substr($fieldValue, strrpos($fieldValue, '@') + 1);
 		$mxRecords = array();
 
-		if(getmxrr(idn_to_ascii($domain), $mxRecords) === true)
+			if(getmxrr(idn_to_ascii($domain), $mxRecords) === true)
 			return true;
 
 		// Port 25 fallback check if there's no MX record
