@@ -10,8 +10,10 @@ use ch\metanet\formHandler\rule\ValidDomainFormatRule;
  * @copyright Copyright (c) 2014, METANET AG
  * @version 1.0.0
  */
-class ValidDomainFormatRuleTest extends \PHPUnit_Framework_TestCase {
-	public function testValidDomainFormatRuleSingleValue() {
+class ValidDomainFormatRuleTest extends \PHPUnit_Framework_TestCase
+{
+	public function testValidDomainFormatRuleSingleValue()
+	{
 		$rule = new ValidDomainFormatRule('this field contains no valid domain');
 		$field = new InputField('test', 'test');
 
@@ -47,6 +49,18 @@ class ValidDomainFormatRuleTest extends \PHPUnit_Framework_TestCase {
 
 		$field->setValue('www.abc.c');
 		$this->assertSame($rule->validate($field), false, 'Invalid TLD ending: www.abc.c');
+
+		$field->setValue('www.abc.ch ');
+		$this->assertSame($rule->validate($field), true, 'Valid domain with space at the end');
+	}
+
+	public function testValidDomainWithoutIgnoringSurroundingSpaces()
+	{
+		$rule = new ValidDomainFormatRule('this field contains no valid domain', true, false);
+		$field = new InputField('test', 'test');
+
+		$field->setValue(' www.abc.ch ');
+		$this->assertSame($rule->validate($field), false, 'Illegal surrounding spaces');
 	}
 }
 

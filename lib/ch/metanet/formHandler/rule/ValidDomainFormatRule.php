@@ -9,28 +9,35 @@ use ch\metanet\formHandler\field\Field;
  * @copyright Copyright (c) 2014, METANET AG
  * @version 1.0.0
  */
-class ValidDomainFormatRule extends Rule {
+class ValidDomainFormatRule extends Rule
+{
 	protected $publicTld;
+	protected $ignoreSurroundingSpaces;
 
 	/**
 	 * @param $errorMessage
-	 * @param $publicTld
+	 * @param bool $publicTld
+	 * @param bool $ignoreSurroundingSpaces
 	 */
-	function __construct($errorMessage, $publicTld = true) {
+	function __construct($errorMessage, $publicTld = true, $ignoreSurroundingSpaces = true)
+	{
 		parent::__construct($errorMessage);
 
 		$this->publicTld = $publicTld;
+		$this->ignoreSurroundingSpaces = $ignoreSurroundingSpaces;
 	}
 
 	/**
 	 * @param Field $field The field instance to check against
 	 * @return bool
 	 */
-	public function validate(Field $field) {
+	public function validate(Field $field)
+	{
 		if($field->isValueEmpty() === true)
 			return true;
-
-		$fldValue = preg_replace(array('@^[a-z]+://@i', '@^www\.@i'), null, $field->getValue());
+ 
+		$fldValue = $this->ignoreSurroundingSpaces ? trim($field->getValue()) : $field->getValue();
+		$fldValue = preg_replace(array('@^[a-z]+://@i', '@^www\.@i'), null, $fldValue);
 
 		if(($lastPoint = strrpos($fldValue, '.')) === false)
 			return false;
@@ -42,4 +49,4 @@ class ValidDomainFormatRule extends Rule {
 	}
 }
 
-/* EOF */ 
+/* EOF */
