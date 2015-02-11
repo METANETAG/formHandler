@@ -13,9 +13,9 @@ use ch\metanet\formHandler\rule\Rule;
 /**
  * @author Pascal Muenst <entwicklung@metanet.ch>
  * @copyright Copyright (c) 2014, METANET AG
- * @version 1.0.0
  */
-abstract class Field extends Component {
+abstract class Field extends Component
+{
 	protected $label;
 	protected $id;
 	protected $ruleSet;
@@ -34,7 +34,8 @@ abstract class Field extends Component {
 	 * @param string $label The label of the field
 	 * @param array $ruleSet
 	 */
-	public function __construct($name, $label, array $ruleSet = array()) {
+	public function __construct($name, $label, array $ruleSet = array())
+	{
 		parent::__construct($name);		
 		
 		$this->id = $name;
@@ -49,7 +50,8 @@ abstract class Field extends Component {
 		$this->fieldComponentRenderer = new DefaultFieldComponentRenderer();
 	}
 
-	public function validate() {
+	public function validate()
+	{
 		foreach($this->ruleSet as $r) {
 			/** @var Rule $r */
 			if($r->validate($this) === true)
@@ -78,7 +80,8 @@ abstract class Field extends Component {
 	 * @return bool
 	 * @throws \UnexpectedValueException
 	 */
-	public function isValueEmpty() {
+	public function isValueEmpty()
+	{
 		if($this->value === null)
 			return true;
 
@@ -97,7 +100,8 @@ abstract class Field extends Component {
 	 * @param string $ruleClassName
 	 * @return bool
 	 */
-	public function hasRule($ruleClassName) {
+	public function hasRule($ruleClassName)
+	{
 		foreach($this->ruleSet as $r) {
 			if(get_class($r) === $ruleClassName)
 				return true;
@@ -109,28 +113,32 @@ abstract class Field extends Component {
 	/**
 	 * @return string
 	 */
-	public function getLabel() {
+	public function getLabel()
+	{
 		return $this->label;
 	}
 
 	/**
 	 * @return array
 	 */
-	public function getRuleSet() {
+	public function getRuleSet()
+	{
 		return $this->ruleSet;
 	}
 
 	/**
 	 * @param Rule $rule
 	 */
-	public function addRule(Rule $rule) {
+	public function addRule(Rule $rule)
+	{
 		$this->ruleSet[] = $rule;
 	}
 
 	/**
 	 * @return array
 	 */
-	public function getDecorators() {
+	public function getDecorators()
+	{
 		return $this->decorators;
 	}
 
@@ -138,14 +146,16 @@ abstract class Field extends Component {
 	 * @param array $ruleSet
 	 * @param bool $override Override current rules for this field
 	 */
-	public function setRuleSet(array $ruleSet, $override = false) {
+	public function setRuleSet(array $ruleSet, $override = false)
+	{
 		if($override === true)
 			$this->ruleSet = array();
 
 		$this->ruleSet = array_merge($this->ruleSet, $ruleSet);
 	}
 
-	public function resetChecked() {
+	public function resetChecked()
+	{
 		$this->validated = false;
 		$this->errors = array();
 	}
@@ -175,35 +185,40 @@ abstract class Field extends Component {
 	/**
 	 * @param mixed $value
 	 */
-	public function setValue($value) {
+	public function setValue($value)
+	{
 		$this->value = $value;
 	}
 
 	/**
 	 * @return mixed
 	 */
-	public function getValue() {
+	public function getValue()
+	{
 		return $this->value;
 	}
 
 	/**
 	 * @return boolean
 	 */
-	public function getValidated() {
+	public function getValidated()
+	{
 		return $this->validated;
 	}
 
 	/**
 	 * @param mixed $linkedLabel
 	 */
-	public function setLinkedLabel($linkedLabel) {
+	public function setLinkedLabel($linkedLabel)
+	{
 		$this->linkedLabel = $linkedLabel;
 	}
 
 	/**
 	 * @return mixed
 	 */
-	public function getLinkedLabel() {
+	public function getLinkedLabel()
+	{
 		return $this->linkedLabel;
 	}
 
@@ -225,7 +240,10 @@ abstract class Field extends Component {
 
 	public function setInputData($data)
 	{
-		$this->value = $data;
+		$this->inputData = $data;
+		
+		if($this->formComponent->isSent() === true)
+			$this->value = $this->inputData;
 	}
 
 	public function getInputData()

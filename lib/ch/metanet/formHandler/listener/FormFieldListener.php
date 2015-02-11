@@ -8,14 +8,15 @@ use ch\metanet\formHandler\field\Field;
 /**
  * @author Pascal Muenst <entwicklung@metanet.ch>
  * @copyright Copyright (c) 2014, METANET AG
- * @version 1.0.0
  */
-abstract class FormFieldListener {
+abstract class FormFieldListener
+{
 	/**
 	 * @param Form $formHandler
 	 * @param Field $component
 	 */
-	public function onEmptyValueBeforeValidation(Form $formHandler, Field $component) {
+	public function onEmptyValueBeforeValidation(Form $formHandler, Field $component)
+	{
 
 	}
 
@@ -23,7 +24,8 @@ abstract class FormFieldListener {
 	 * @param Form $formHandler
 	 * @param Field $component
 	 */
-	public function onEmptyValueAfterValidation(Form $formHandler, Field $component) {
+	public function onEmptyValueAfterValidation(Form $formHandler, Field $component)
+	{
 
 	}
 
@@ -31,7 +33,8 @@ abstract class FormFieldListener {
 	 * @param Form $formHandler
 	 * @param Field $component
 	 */
-	public function onNotEmptyValueBeforeValidation(Form $formHandler, Field $component) {
+	public function onNotEmptyValueBeforeValidation(Form $formHandler, Field $component)
+	{
 
 	}
 
@@ -39,7 +42,8 @@ abstract class FormFieldListener {
 	 * @param Form $formHandler
 	 * @param Field $component
 	 */
-	public function onNotEmptyValueAfterValidation(Form $formHandler, Field $component) {
+	public function onNotEmptyValueAfterValidation(Form $formHandler, Field $component)
+	{
 
 	}
 
@@ -47,7 +51,8 @@ abstract class FormFieldListener {
 	 * @param Form $formHandler
 	 * @param Field $component
 	 */
-	public function onValidationError(Form $formHandler, Field $component) {
+	public function onValidationError(Form $formHandler, Field $component)
+	{
 
 	}
 
@@ -55,7 +60,8 @@ abstract class FormFieldListener {
 	 * @param Form $formHandler
 	 * @param Field $field
 	 */
-	public function onValidationSuccess(Form $formHandler, Field $field) {
+	public function onValidationSuccess(Form $formHandler, Field $field)
+	{
 
 	}
 }

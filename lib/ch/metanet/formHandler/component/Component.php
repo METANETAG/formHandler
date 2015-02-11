@@ -8,7 +8,8 @@ use ch\metanet\formHandler\listener\FormFieldListener;
  * @author Pascal Muenst <entwicklung@metanet.ch>
  * @copyright Copyright (c) 2014, METANET AG
  */
-abstract class Component {
+abstract class Component
+{
 	/** @var Form */
 	protected $formComponent;
 	/** @var Component */
@@ -90,8 +91,9 @@ abstract class Component {
 		$this->listeners[] = $listener;
 	}
 	
-	public function getFormIdentifierAsString() {
-		$multiBraces = ($this->index !== null)?'[' . $this->index . ']':null;
+	public function getFormIdentifierAsString()
+	{
+		$multiBraces = ($this->index !== null) ? '[' . $this->index . ']' : null;
 		
 		if($this->parentComponent === null || $this->parentComponent instanceof Form)
 			return $this->getName() . $multiBraces;
@@ -103,10 +105,7 @@ abstract class Component {
 	 * Sets the input data to fill and validate the connected form fields against
 	 * @param mixed $data The input data (e.x. $_GET, $_POST, $_FILES or a merged array)
 	 */
-	public function setInputData($data)
-	{
-		$this->inputData = $data;
-	}
+	public abstract function setInputData($data);
 
 	/**
 	 * @return array

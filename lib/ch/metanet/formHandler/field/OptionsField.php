@@ -10,7 +10,8 @@ use ch\metanet\formHandler\renderer\SelectOptionsFieldRenderer;
  * @copyright Copyright (c) 2014, METANET AG
  * @version 1.0.0
  */
-class OptionsField extends Field {
+class OptionsField extends Field
+{
 	protected $options;
 	protected $optionsFieldRenderer;
 	protected $errorMessageInvalidOption;
@@ -89,7 +90,8 @@ class OptionsField extends Field {
 	}
 
 	/**
-	 * The
+	 * The valid options
+	 * 
 	 * @param array $options
 	 */
 	public function setOptions($options)

@@ -7,9 +7,9 @@ use ch\metanet\formHandler\renderer\TimeFieldRenderer;
 /**
  * @author Pascal Muenst <entwicklung@metanet.ch>
  * @copyright Copyright (c) 2014, METANET AG
- * @version 1.0.0
  */
-class DateTimeField extends DateField {
+class DateTimeField extends DateField
+{
 	const TIME_WITH_SECONDS = 'H:i:s';
 	const TIME_WITHOUT_SECONDS = 'H:i';
 
@@ -21,7 +21,8 @@ class DateTimeField extends DateField {
 	protected $errorMessageInvalidMinute;
 	protected $errorMessageInvalidSecond;
 
-	public function __construct($name, $label, $timeFormat = self::TIME_WITH_SECONDS, array $ruleSet = array()) {
+	public function __construct($name, $label, $timeFormat = self::TIME_WITH_SECONDS, array $ruleSet = array())
+	{
 		parent::__construct($name, $label, $ruleSet);
 
 		$this->timeFormat = $timeFormat;
@@ -41,14 +42,16 @@ class DateTimeField extends DateField {
 		);
 	}
 
-	public function render() {
+	public function render()
+	{
 		return $this->fieldComponentRenderer->render(
 			$this,
 			'<div class="form-date">' . $this->dateFieldRenderer->render($this) . (($this->timeFieldRenderer !== null)?$this->timeFieldRenderer->render($this):null) . '</div>'
 		);
 	}
 
-	public function isValueEmpty() {
+	public function isValueEmpty()
+	{
 		$isEmpty = parent::isValueEmpty();
 
 		if($isEmpty === false || is_array($this->value) === false)
@@ -66,7 +69,8 @@ class DateTimeField extends DateField {
 		return $dateEmpty;
 	}
 
-	protected function validateDate() {
+	protected function validateDate()
+	{
 		$dateValue = $this->value;
 
 		if(is_array($this->value) === true) {
@@ -117,42 +121,48 @@ class DateTimeField extends DateField {
 	/**
 	 * @param mixed $timeFieldRenderer
 	 */
-	public function setTimeFieldRenderer(TimeFieldRenderer $timeFieldRenderer) {
+	public function setTimeFieldRenderer(TimeFieldRenderer $timeFieldRenderer)
+	{
 		$this->timeFieldRenderer = $timeFieldRenderer;
 	}
 
 	/**
 	 * @param string $timeFormat
 	 */
-	public function setTimeFormat($timeFormat) {
+	public function setTimeFormat($timeFormat)
+	{
 		$this->timeFormat = $timeFormat;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getTimeFormat() {
+	public function getTimeFormat()
+	{
 		return $this->timeFormat;
 	}
 
 	/**
 	 * @param string $errorMessageInvalidHour
 	 */
-	public function setErrorMessageInvalidHour($errorMessageInvalidHour) {
+	public function setErrorMessageInvalidHour($errorMessageInvalidHour)
+	{
 		$this->errorMessageInvalidHour = $errorMessageInvalidHour;
 	}
 
 	/**
 	 * @param string $errorMessageInvalidMinute
 	 */
-	public function setErrorMessageInvalidMinute($errorMessageInvalidMinute) {
+	public function setErrorMessageInvalidMinute($errorMessageInvalidMinute)
+	{
 		$this->errorMessageInvalidMinute = $errorMessageInvalidMinute;
 	}
 
 	/**
 	 * @param string $errorMessageInvalidSecond
 	 */
-	public function setErrorMessageInvalidSecond($errorMessageInvalidSecond) {
+	public function setErrorMessageInvalidSecond($errorMessageInvalidSecond)
+	{
 		$this->errorMessageInvalidSecond = $errorMessageInvalidSecond;
 	}
 }

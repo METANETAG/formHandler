@@ -7,23 +7,25 @@ use ch\metanet\formHandler\listener\FileFieldListener;
 /**
  * @author Pascal Muenst <entwicklung@metanet.ch>
  * @copyright Copyright (c) 2014, METANET AG
- * @version 1.0.0
  */
-class FileField extends Field {
+class FileField extends Field
+{
 	const VALUE_NAME = 'name';
 	const VALUE_TMP_NAME = 'tmp_name';
 	const VALUE_TYPE = 'type';
 	const VALUE_ERROR = 'error';
 	const VALUE_SIZE = 'size';
 
-	public function render() {
+	public function render()
+	{
 		return $this->fieldComponentRenderer->render(
 			$this,
 			'<input type="file" name="' . $this->getFormIdentifierAsString() . '" id="' . $this->name . '">'
 		);
 	}
 
-	public function validate() {
+	public function validate()
+	{
 		$valid = parent::validate();
 
 		if($valid === false)
@@ -47,7 +49,8 @@ class FileField extends Field {
 		return true;
 	}
 
-	public function isValueEmpty() {
+	public function isValueEmpty()
+	{
 		if(parent::isValueEmpty() === true)
 			return true;
 
@@ -62,7 +65,8 @@ class FileField extends Field {
 	 * @param string|null $selector The data selector. NULL means the whole data array
 	 * @return string|array|null The selected field data
 	 */
-	public function getValue($selector = null) {
+	public function getValue($selector = null)
+	{
 		if($selector === null)
 			return $this->value;
 

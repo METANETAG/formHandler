@@ -8,9 +8,9 @@ use ch\metanet\formHandler\renderer\SelectDateFieldRenderer;
 /**
  * @author Pascal Muenst <entwicklung@metanet.ch>
  * @copyright Copyright (c) 2014, METANET AG
- * @version 1.0.0
  */
-class DateField extends Field {
+class DateField extends Field
+{
 	/** @var  DateFieldRenderer */
 	protected $dateFieldRenderer;
 	protected $allowedDateFormats;
@@ -19,7 +19,8 @@ class DateField extends Field {
 	protected $errorMessageNoYear;
 	protected $errorMessageInvalidYear;
 
-	public function __construct($name, $label, array $ruleSet = array()) {
+	public function __construct($name, $label, array $ruleSet = array())
+	{
 		parent::__construct($name, $label, $ruleSet);
 
 		$this->errorMessageInvalidDate = 'The date you entered is invalid';
@@ -34,14 +35,16 @@ class DateField extends Field {
 		$this->dateFieldRenderer = new SelectDateFieldRenderer();
 	}
 
-	public function render() {
+	public function render()
+	{
 		return $this->fieldComponentRenderer->render(
 			$this,
 			'<div class="form-date">' . $this->dateFieldRenderer->render($this) . '</div>'
 		);
 	}
 
-	public function validate() {
+	public function validate()
+	{
 		if($this->isValueEmpty() === false) {
 			if($this->validateDate() === false)
 				return false;
@@ -50,7 +53,8 @@ class DateField extends Field {
 		return parent::validate();
 	}
 
-	public function isValueEmpty() {
+	public function isValueEmpty()
+	{
 		if(parent::isValueEmpty() === true)
 			return true;
 
@@ -66,7 +70,8 @@ class DateField extends Field {
 	}
 
 
-	protected function validateDate() {
+	protected function validateDate()
+	{
 		$dateValue = $this->value;
 
 		if(is_array($this->value) === true) {
@@ -99,7 +104,8 @@ class DateField extends Field {
 		return true;
 	}
 
-	protected function createDateFromFormat($dateString) {
+	protected function createDateFromFormat($dateString)
+	{
 		foreach($this->allowedDateFormats as $df) {
 			if(($dt = \DateTime::createFromFormat($df, $dateString)) !== false)
 				return $dt;
@@ -111,28 +117,32 @@ class DateField extends Field {
 	/**
 	 * @param DateFieldRenderer $fieldRenderer
 	 */
-	public function setDateFieldRenderer(DateFieldRenderer $fieldRenderer) {
+	public function setDateFieldRenderer(DateFieldRenderer $fieldRenderer)
+	{
 		$this->dateFieldRenderer = $fieldRenderer;
 	}
 
 	/**
 	 * @param string $errorMessageInvalidDate
 	 */
-	public function setErrorMessageInvalidDate($errorMessageInvalidDate) {
+	public function setErrorMessageInvalidDate($errorMessageInvalidDate)
+	{
 		$this->errorMessageInvalidDate = $errorMessageInvalidDate;
 	}
 
 	/**
 	 * @param array $allowedDateFormats
 	 */
-	public function setAllowedDateFormats($allowedDateFormats) {
+	public function setAllowedDateFormats($allowedDateFormats)
+	{
 		$this->allowedDateFormats = $allowedDateFormats;
 	}
 
 	/**
 	 * @return array An array with the allowed date patterns
 	 */
-	public function getAllowedDateFormats() {
+	public function getAllowedDateFormats()
+	{
 		return $this->allowedDateFormats;
 	}
 }

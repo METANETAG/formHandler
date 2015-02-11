@@ -8,12 +8,14 @@ use ch\metanet\formHandler\field\OptionsField;
  * @author Pascal Muenst <entwicklung@metanet.ch>
  * @copyright Copyright (c) 2014, METANET AG
  */
-class AttributesOptionsFieldRenderer extends OptionsFieldRenderer {
+class AttributesOptionsFieldRenderer extends OptionsFieldRenderer
+{
 	/**
 	 * @param OptionsField $field The field instance to render
 	 * @return string The rendered field
 	 */
-	public function render(OptionsField $field) {
+	public function render(OptionsField $field)
+	{
 		$html = '<ul' . $this->getAttributesAsHtml() . '>';
 
 		$fieldName = $field->getName();

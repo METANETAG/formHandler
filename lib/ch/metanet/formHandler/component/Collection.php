@@ -11,7 +11,8 @@ use ch\metanet\formHandler\renderer\DefaultCollectionComponentRenderer;
  * @author Pascal Muenst <entwicklung@metanet.ch>
  * @copyright Copyright (c) 2014, METANET AG
  */
-class Collection extends Component {
+class Collection extends Component
+{
 	protected $components;
 	
 	/** @var CollectionComponentRenderer */
@@ -33,8 +34,9 @@ class Collection extends Component {
 	 */
 	public function addComponents(array $components)
 	{
-		foreach($components as $fld)
+		foreach($components as $fld) {
 			$this->addComponent($fld);
+		}
 	}
 
 	/**
@@ -58,12 +60,9 @@ class Collection extends Component {
 		$component->setFormComponent($this->formComponent);
 		
 		$this->components[$component->getName()] = $component;
-
+		
 		// Set value if there is one
-		if(array_key_exists($component->getName(), $this->inputData) === true)
-			$component->setInputData($this->inputData[$component->getName()]);
-		elseif($component->isValueEmpty() === true)
-			$component->setInputData(null);
+		$component->setInputData(is_array($this->inputData) && array_key_exists($component->getName(), $this->inputData) ? $this->inputData[$component->getName()] : null);
 	}
 
 	/**
@@ -132,20 +131,12 @@ class Collection extends Component {
 
 	public function setInputData($data)
 	{
-		if($data === null)
-			$data = array();
-		elseif(is_scalar($data) === true)
-			$data = array($data);
-		
-		parent::setInputData($data);
+		$this->inputData = (array)$data;
 		
 		// Delegate values
 		foreach($this->components as $component) {
 			/** @var Field $component */
-			if(array_key_exists($component->getName(), $data) === false)
-				continue;
-			
-			$component->setInputData($data[$component->getName()]);
+			$component->setInputData(array_key_exists($component->getName(), $this->inputData) ? $this->inputData[$component->getName()] : null);
 		}
 	}
 

@@ -7,15 +7,16 @@ use ch\metanet\formHandler\field\InputField;
 /**
  * @author Pascal Muenst <entwicklung@metanet.ch>
  * @copyright Copyright (c) 2014, METANET AG
- * @version 1.0.0
  */
-class CallbackInputFieldRenderer extends InputFieldRenderer {
+class CallbackInputFieldRenderer extends InputFieldRenderer
+{
 	protected $callback;
 
 	/**
 	 * @param array $callback A valid callback to render the InputField
 	 */
-	public function __construct(array $callback) {
+	public function __construct(array $callback)
+	{
 		$this->callback = $callback;
 	}
 
@@ -23,7 +24,8 @@ class CallbackInputFieldRenderer extends InputFieldRenderer {
 	 * @param InputField $field The InputField to render
 	 * @return string The rendered HTML for the InputField
 	 */
-	public function render(InputField $field) {
+	public function render(InputField $field)
+	{
 		return call_user_func($this->callback, $field);
 	}
 }
