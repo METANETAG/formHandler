@@ -81,7 +81,8 @@ class Collection extends Component
 	 * @throws \OutOfBoundsException If the component does not exist
 	 * @return Component The component
 	 */
-	public function getComponent($name) {
+	public function getComponent($name)
+	{
 		if(isset($this->components[$name]) === false)
 			throw new \OutOfBoundsException('The component with name "' . $name . '" does not exist');
 
