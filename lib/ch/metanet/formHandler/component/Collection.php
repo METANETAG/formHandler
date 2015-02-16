@@ -13,6 +13,7 @@ use ch\metanet\formHandler\renderer\DefaultCollectionComponentRenderer;
  */
 class Collection extends Component
 {
+	/** @var Component[] */
 	protected $components;
 	
 	/** @var CollectionComponentRenderer */
@@ -30,7 +31,7 @@ class Collection extends Component
 	/**
 	 * Connects an undefined amount of form fields with this form handler instance preserving the already connected
 	 * fields of this instance
-	 * @param array $components The array with form fields to be connected
+	 * @param Component[] $components The array with form fields to be connected
 	 */
 	public function addComponents(array $components)
 	{
@@ -42,7 +43,7 @@ class Collection extends Component
 	/**
 	 * Connects an undefined amount of form fields with this form handler instance and overrides all the already
 	 * connected fields of this instance
-	 * @param array $components The array with form fields to be connected
+	 * @param Component[] $components The array with form fields to be connected
 	 */
 	public function setComponents(array $components)
 	{
@@ -67,7 +68,7 @@ class Collection extends Component
 
 	/**
 	 * Returns all connected components for this form handler instance
-	 * @return array All connected components of this form handler instance
+	 * @return Component[] All connected components of this form handler instance
 	 */
 	public function getComponents()
 	{
@@ -105,7 +106,6 @@ class Collection extends Component
 		$validation = true;
 		
 		foreach($this->components as $component) {
-			/** @var Component $component */
 			if($component->validate() === true)
 				continue;
 			
