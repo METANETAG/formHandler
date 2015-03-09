@@ -19,17 +19,19 @@ Quick code example:
 <?php
 
 $myForm = new Form();
-$myForm->setInputData(array_merge($_GET, $_POST));
+$myForm->setInputData($_GET + $_POST);
 
 $myField = new InputField('my_field', 'My field');
 $myField->addRule(new RequiredRule('Please insert a value for my field'));
 
 $myForm->addComponent($myField);
 
-if($myForm->isSent() === true && $myForm->validate() === true) {
-	echo 'Form sent to the server and validated successfully!';
-} else {
-	echo 'There have been errors during validation. Please check the red marked fields below.';
+if($myForm->isSent() === true)
+	if($myForm->validate() === true) {
+		echo 'Form sent to the server and validated successfully!';
+	} else {
+		echo 'There have been errors during validation. Please check the red marked fields below.';
+	}
 }
 
 echo $myForm->render();
