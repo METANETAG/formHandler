@@ -2,7 +2,7 @@
 
 namespace ch\metanet\formHandler\field;
 
-use ch\metanet\formHandler\common\Attachable;
+use ch\metanet\formHandler\common\Mappable;
 use ch\metanet\formHandler\component\Component;
 use ch\metanet\formHandler\listener\FormFieldListener;
 use ch\metanet\formHandler\renderer\DefaultFieldComponentRenderer;
@@ -13,7 +13,7 @@ use ch\metanet\formHandler\rule\Rule;
  * @author Pascal Muenst <entwicklung@metanet.ch>
  * @copyright Copyright (c) 2014, METANET AG
  */
-abstract class Field extends Component implements Attachable
+abstract class Field extends Component implements Mappable
 {
 	protected $label;
 	protected $id;
@@ -193,11 +193,13 @@ abstract class Field extends Component implements Attachable
 	}
 
 	/**
+	 * @param bool $translate
+	 *
 	 * @return mixed
 	 */
-	public function getValue()
+	public function getValue($translate = true)
 	{
-		if($this->translateValueCallback === null)
+		if($this->translateValueCallback === null || $translate === false)
 			return $this->value;
 		
 		return call_user_func($this->translateValueCallback, $this->value);
@@ -276,7 +278,7 @@ abstract class Field extends Component implements Attachable
 	 * @param string $reference
 	 * @param callable $callback
 	 */
-	public function attach($reference, callable $callback = null)
+	public function map($reference, callable $callback = null)
 	{
 		$this->attachedReference = $reference;
 	}
@@ -284,7 +286,7 @@ abstract class Field extends Component implements Attachable
 	/**
 	 * @return bool
 	 */
-	public function isAttached()
+	public function isMapped()
 	{
 		return ($this->attachedReference !== null);
 	}
@@ -292,7 +294,7 @@ abstract class Field extends Component implements Attachable
 	/**
 	 * @return string
 	 */
-	public function getAttached()
+	public function getMapped()
 	{
 		return $this->attachedReference;
 	}
@@ -300,7 +302,7 @@ abstract class Field extends Component implements Attachable
 	/**
 	 * @param int|bool|string|array $data
 	 */
-	public function setAttachedData($data)
+	public function setMappedData($data)
 	{
 		$this->value = $data;
 	}
@@ -308,7 +310,7 @@ abstract class Field extends Component implements Attachable
 	/**
 	 * @return mixed
 	 */
-	public function getAttachedData()
+	public function getMappedData()
 	{
 		return $this->getValue();
 	}

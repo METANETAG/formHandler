@@ -2,7 +2,7 @@
 
 namespace ch\metanet\formHandler\component;
 
-use ch\metanet\formHandler\common\Attachable;
+use ch\metanet\formHandler\common\Mappable;
 use ch\metanet\formHandler\common\FormHandlerException;
 use ch\metanet\formHandler\field\Field;
 use ch\metanet\formHandler\renderer\CollectionComponentRenderer;
@@ -12,7 +12,7 @@ use ch\metanet\formHandler\renderer\DefaultCollectionComponentRenderer;
  * @author Pascal Muenst <entwicklung@metanet.ch>
  * @copyright Copyright (c) 2014, METANET AG
  */
-class Collection extends Component implements Attachable
+class Collection extends Component implements Mappable
 {
 	/** @var Component[] */
 	protected $components;
@@ -67,10 +67,12 @@ class Collection extends Component implements Attachable
 		
 		
 		// Set value from attached object
-		if($this->isAttached() && $component instanceof Attachable) {
-			/** @var Component|Attachable $component */
-			if(property_exists($this->attachedReference, $component->getAttached())) {
-				$refProp = new \ReflectionProperty($this->attachedReference, $component->getAttached());
+		if($this->isMapped() && $component instanceof Mappable) {
+			/** @var Component|Mappable $component */
+			if(is_object($component->getMapped()) === true) {
+				$value = $component->getMapped();
+			} elseif(property_exists($this->attachedReference, $component->getMapped())) {
+				$refProp = new \ReflectionProperty($this->attachedReference, $component->getMapped());
 				
 				if($refProp->isPublic() === false)
 					$refProp->setAccessible(true);
@@ -83,7 +85,7 @@ class Collection extends Component implements Attachable
 				$value = null;
 			}
 			
-			$component->setAttachedData($value);
+			$component->setMappedData($value);
 		}
 
 		// Set value if there is one
@@ -134,19 +136,19 @@ class Collection extends Component implements Attachable
 		foreach($this->components as $component) {
 			if($component->validate() === true) {
 				
-				if($this->isAttached() === false || $component instanceof Attachable === false)
+				if($this->isMapped() === false || $component instanceof Mappable === false)
 					continue;
 
-				/** @var Component|Attachable $component */
-				if(property_exists($this->attachedReference, $component->getAttached()) === false)
+				/** @var Component|Mappable $component */
+				if(is_string($component->getMapped()) === false || property_exists($this->attachedReference, $component->getMapped()) === false)
 					continue;
 					
-				$refProp = new \ReflectionProperty($this->attachedReference, $component->getAttached());
+				$refProp = new \ReflectionProperty($this->attachedReference, $component->getMapped());
 
 				if($refProp->isPublic() === false)
 					$refProp->setAccessible(true);
 
-				$refProp->setValue($this->attachedReference, $component->getAttachedData());
+				$refProp->setValue($this->attachedReference, $component->getMappedData());
 
 				if($refProp->isPublic() === false)
 					$refProp->setAccessible(false);
@@ -220,10 +222,13 @@ class Collection extends Component implements Attachable
 	 *
 	 * @throws FormHandlerException
 	 */
-	public function attach($reference, callable $callback = null)
+	public function map($reference, callable $callback = null)
 	{
-		if(is_object($reference) === false)
+		if(is_string($reference) === true) {
+			
+		} elseif(is_object($reference) === false) {
 			throw new FormHandlerException('The reference to attach has to be an object');
+		}
 		
 		$this->attachedReference = $reference;
 	}
@@ -231,7 +236,7 @@ class Collection extends Component implements Attachable
 	/**
 	 * @return bool
 	 */
-	public function isAttached()
+	public function isMapped()
 	{
 		return ($this->attachedReference !== null);
 	}
@@ -239,7 +244,7 @@ class Collection extends Component implements Attachable
 	/**
 	 * @return array|object $reference
 	 */
-	public function getAttached()
+	public function getMapped()
 	{
 		return $this->attachedReference;
 	}
@@ -249,9 +254,11 @@ class Collection extends Component implements Attachable
 	 *
 	 * @throws FormHandlerException
 	 */
-	public function setAttachedData($data)
+	public function setMappedData($data)
 	{
-		if(is_object($data) === false)
+		if($data === null)
+			return;
+		elseif(is_object($data) === false)
 			throw new FormHandlerException('The value to attach has to be an object');
 		
 		$this->attachedReference = $data;
@@ -260,7 +267,7 @@ class Collection extends Component implements Attachable
 	/**
 	 * @return object
 	 */
-	public function getAttachedData()
+	public function getMappedData()
 	{
 		return $this->attachedReference;
 	}

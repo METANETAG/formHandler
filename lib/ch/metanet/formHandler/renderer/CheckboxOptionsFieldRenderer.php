@@ -18,16 +18,15 @@ class CheckboxOptionsFieldRenderer extends OptionsFieldRenderer
 	{
 		$required = ($field->hasRule('ch\metanet\formHandler\rule\RequiredRule') === true) ? ' aria-required="true"' : null;
 		$optionsCount = count($field->getOptions());
-		$fieldValue = (array)$field->getValue();
+		$fieldValue = (array)$field->getValue(false);
 		
 		$html = '<ul' . $this->getAttributesAsHtml() . '>';
-		$fieldName = ($optionsCount === 1)?$field->getName():$field->getName() . '[]';
-
+		
 		foreach($field->getOptions() as $key => $val) {
 			$attrId = ' id="' . $field->getName() . (($optionsCount !== 1) ?  '-' . $key : null) . '"';
 			
 			$checked = in_array($key, $fieldValue) ? ' checked' : null;
-			$html .= '<li><label><input type="checkbox" name="' . $fieldName . '" value="' . $key . '"' . $attrId . $checked . $required . '> ' . $val . '</label></li>';
+			$html .= '<li><label><input type="checkbox" name="' . $field->getFormIdentifierAsString() . '" value="' . $key . '"' . $attrId . $checked . $required . '> ' . $val . '</label></li>';
 		}
 
 		$html .= '</ul>';
