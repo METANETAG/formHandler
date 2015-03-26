@@ -3,6 +3,7 @@
 namespace ch\metanet\formHandler\component;
 
 use ch\metanet\formHandler\common\Attachable;
+use ch\metanet\formHandler\common\FormHandlerException;
 use ch\metanet\formHandler\field\Field;
 use ch\metanet\formHandler\renderer\CollectionComponentRenderer;
 use ch\metanet\formHandler\renderer\DefaultCollectionComponentRenderer;
@@ -64,8 +65,30 @@ class Collection extends Component implements Attachable
 		
 		$this->components[$component->getName()] = $component;
 		
+		
+		// Set value from attached object
+		if($this->isAttached() && $component instanceof Attachable) {
+			/** @var Component|Attachable $component */
+			if(property_exists($this->attachedReference, $component->getAttached())) {
+				$refProp = new \ReflectionProperty($this->attachedReference, $component->getAttached());
+				
+				if($refProp->isPublic() === false)
+					$refProp->setAccessible(true);
+
+				$value = $refProp->getValue($this->attachedReference);
+				
+				if($refProp->isPublic() === false)
+					$refProp->setAccessible(false);
+			} else {
+				$value = null;
+			}
+			
+			$component->setAttachedData($value);
+		}
+
 		// Set value if there is one
-		$component->setInputData(is_array($this->inputData) && array_key_exists($component->getName(), $this->inputData) ? $this->inputData[$component->getName()] : null);
+		$component->setInputData(is_array($this->inputData) && array_key_exists($component->getName(), $this->inputData) ? $this->inputData[ $component->getName() ] : null);
+
 	}
 
 	/**
@@ -174,9 +197,15 @@ class Collection extends Component implements Attachable
 
 	/**
 	 * @param array|object $reference
+	 * @param callable $callback
+	 *
+	 * @throws FormHandlerException
 	 */
-	public function attach($reference)
+	public function attach($reference, callable $callback = null)
 	{
+		if(is_object($reference) === false)
+			throw new FormHandlerException('The reference to attach has to be an object');
+		
 		$this->attachedReference = $reference;
 	}
 
@@ -186,6 +215,27 @@ class Collection extends Component implements Attachable
 	public function isAttached()
 	{
 		return ($this->attachedReference !== null);
+	}
+
+	/**
+	 * @return array|object $reference
+	 */
+	public function getAttached()
+	{
+		return $this->attachedReference;
+	}
+
+	/**
+	 * @param object $data
+	 *
+	 * @throws FormHandlerException
+	 */
+	public function setAttachedData($data)
+	{
+		if(is_object($data) === false)
+			throw new FormHandlerException('The value to attach has to be an object');
+		
+		$this->attachedReference = $data;
 	}
 }
 

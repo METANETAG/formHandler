@@ -270,8 +270,9 @@ abstract class Field extends Component implements Attachable
 
 	/**
 	 * @param string $reference
+	 * @param callable $callback
 	 */
-	public function attach($reference)
+	public function attach($reference, callable $callback = null)
 	{
 		$this->attachedReference = $reference;
 	}
@@ -282,6 +283,22 @@ abstract class Field extends Component implements Attachable
 	public function isAttached()
 	{
 		return ($this->attachedReference !== null);
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getAttached()
+	{
+		return $this->attachedReference;
+	}
+
+	/**
+	 * @param int|bool|string|array $data
+	 */
+	public function setAttachedData($data)
+	{
+		$this->value = $data;
 	}
 }
 
