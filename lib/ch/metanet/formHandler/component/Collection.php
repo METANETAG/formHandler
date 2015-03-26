@@ -132,8 +132,27 @@ class Collection extends Component implements Attachable
 		$validation = true;
 		
 		foreach($this->components as $component) {
-			if($component->validate() === true)
+			if($component->validate() === true) {
+				
+				if($this->isAttached() === false || $component instanceof Attachable === false)
+					continue;
+
+				/** @var Component|Attachable $component */
+				if(property_exists($this->attachedReference, $component->getAttached()) === false)
+					continue;
+					
+				$refProp = new \ReflectionProperty($this->attachedReference, $component->getAttached());
+
+				if($refProp->isPublic() === false)
+					$refProp->setAccessible(true);
+
+				$refProp->setValue($this->attachedReference, $component->getAttachedData());
+
+				if($refProp->isPublic() === false)
+					$refProp->setAccessible(false);
+				
 				continue;
+			}
 			
 			$validation = false;
 			$this->errors = array_merge($this->errors, $component->getErrors());
@@ -236,6 +255,14 @@ class Collection extends Component implements Attachable
 			throw new FormHandlerException('The value to attach has to be an object');
 		
 		$this->attachedReference = $data;
+	}
+
+	/**
+	 * @return object
+	 */
+	public function getAttachedData()
+	{
+		return $this->attachedReference;
 	}
 }
 

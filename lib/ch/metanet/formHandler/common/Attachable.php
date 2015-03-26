@@ -28,6 +28,11 @@ interface Attachable
 	 * @param mixed $data
 	 */
 	public function setAttachedData($data);
+
+	/**
+	 * @return mixed
+	 */
+	public function getAttachedData();
 }
 
 /* EOF */

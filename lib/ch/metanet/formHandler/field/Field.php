@@ -29,6 +29,7 @@ abstract class Field extends Component implements Attachable
 	protected $fieldComponentRenderer;
 	
 	protected $attachedReference;
+	protected $translateValueCallback;
 
 	/**
 	 * @param string $name The name of the field in the HTTP request
@@ -196,7 +197,10 @@ abstract class Field extends Component implements Attachable
 	 */
 	public function getValue()
 	{
-		return $this->value;
+		if($this->translateValueCallback === null)
+			return $this->value;
+		
+		return call_user_func($this->translateValueCallback, $this->value);
 	}
 
 	/**
@@ -299,6 +303,26 @@ abstract class Field extends Component implements Attachable
 	public function setAttachedData($data)
 	{
 		$this->value = $data;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getAttachedData()
+	{
+		return $this->getValue();
+	}
+
+	/**
+	 * Translates the native value received by the PHP form to another one. 
+	 * This is useful if you have for e.x. an optional checkboxes with value 1 if checked.
+	 * With this method you can translate the value '1' to true and 'NULL' to false then.
+	 * 
+	 * @param callable $callback
+	 */
+	public function translateValue(callable $callback)
+	{
+		$this->translateValueCallback = $callback;
 	}
 }
 
