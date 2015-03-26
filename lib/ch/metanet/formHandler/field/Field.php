@@ -2,9 +2,8 @@
 
 namespace ch\metanet\formHandler\field;
 
+use ch\metanet\formHandler\common\Attachable;
 use ch\metanet\formHandler\component\Component;
-use ch\metanet\formHandler\component\Form;
-use ch\metanet\formHandler\decorator\FieldValueDecorator;
 use ch\metanet\formHandler\listener\FormFieldListener;
 use ch\metanet\formHandler\renderer\DefaultFieldComponentRenderer;
 use ch\metanet\formHandler\renderer\FieldComponentRenderer;
@@ -14,7 +13,7 @@ use ch\metanet\formHandler\rule\Rule;
  * @author Pascal Muenst <entwicklung@metanet.ch>
  * @copyright Copyright (c) 2014, METANET AG
  */
-abstract class Field extends Component
+abstract class Field extends Component implements Attachable
 {
 	protected $label;
 	protected $id;
@@ -28,6 +27,8 @@ abstract class Field extends Component
 	protected $errors;
 
 	protected $fieldComponentRenderer;
+	
+	protected $attachedReference;
 
 	/**
 	 * @param string $name The name of the field in the HTTP request
@@ -265,6 +266,22 @@ abstract class Field extends Component
 	public function getId()
 	{
 		return $this->id;
+	}
+
+	/**
+	 * @param string $reference
+	 */
+	public function attach($reference)
+	{
+		$this->attachedReference = $reference;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isAttached()
+	{
+		return ($this->attachedReference !== null);
 	}
 }
 

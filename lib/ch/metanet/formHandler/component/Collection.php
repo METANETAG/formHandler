@@ -2,8 +2,8 @@
 
 namespace ch\metanet\formHandler\component;
 
+use ch\metanet\formHandler\common\Attachable;
 use ch\metanet\formHandler\field\Field;
-use ch\metanet\formHandler\listener\FormFieldListener;
 use ch\metanet\formHandler\renderer\CollectionComponentRenderer;
 use ch\metanet\formHandler\renderer\DefaultCollectionComponentRenderer;
 
@@ -11,13 +11,15 @@ use ch\metanet\formHandler\renderer\DefaultCollectionComponentRenderer;
  * @author Pascal Muenst <entwicklung@metanet.ch>
  * @copyright Copyright (c) 2014, METANET AG
  */
-class Collection extends Component
+class Collection extends Component implements Attachable
 {
 	/** @var Component[] */
 	protected $components;
 	
 	/** @var CollectionComponentRenderer */
 	protected $collectionComponentRenderer;
+	
+	protected $attachedReference;
 
 	public function __construct($name)
 	{
@@ -168,6 +170,22 @@ class Collection extends Component
 		}
 		
 		return $errors;
+	}
+
+	/**
+	 * @param array|object $reference
+	 */
+	public function attach($reference)
+	{
+		$this->attachedReference = $reference;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isAttached()
+	{
+		return ($this->attachedReference !== null);
 	}
 }
 
