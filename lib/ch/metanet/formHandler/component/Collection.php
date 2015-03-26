@@ -2,9 +2,10 @@
 
 namespace ch\metanet\formHandler\component;
 
-use ch\metanet\formHandler\common\Mappable;
-use ch\metanet\formHandler\common\FormHandlerException;
+use ch\metanet\formHandler\mappable\Mappable;
+use ch\metanet\formHandler\exception\FormHandlerException;
 use ch\metanet\formHandler\field\Field;
+use ch\metanet\formHandler\mappable\MappableHelper;
 use ch\metanet\formHandler\renderer\CollectionComponentRenderer;
 use ch\metanet\formHandler\renderer\DefaultCollectionComponentRenderer;
 
@@ -72,15 +73,7 @@ class Collection extends Component implements Mappable
 			if(is_object($component->getMapped()) === true) {
 				$value = $component->getMapped();
 			} elseif(property_exists($this->mappedReference, $component->getMapped())) {
-				$refProp = new \ReflectionProperty($this->mappedReference, $component->getMapped());
-				
-				if($refProp->isPublic() === false)
-					$refProp->setAccessible(true);
-
-				$value = $refProp->getValue($this->mappedReference);
-				
-				if($refProp->isPublic() === false)
-					$refProp->setAccessible(false);
+				$value = MappableHelper::getPropertyValue($this->mappedReference, $component->getMapped());
 			} else {
 				$value = null;
 			}
@@ -107,15 +100,7 @@ class Collection extends Component implements Mappable
 		parent::setParentComponent($parentComponent);
 		
 		if(is_string($this->mappedReference) === true && property_exists($this->parentComponent->getMapped(), $this->mappedReference) === true) {
-			$refProp = new \ReflectionProperty($this->parentComponent->getMapped(), $this->mappedReference);
-
-			if($refProp->isPublic() === false)
-				$refProp->setAccessible(true);
-
-			$this->mappedReference = $refProp->getValue($this->parentComponent->getMapped());
-
-			if($refProp->isPublic() === false)
-				$refProp->setAccessible(false);
+			$this->mappedReference = MappableHelper::getPropertyValue($this->parentComponent->getMapped(), $this->mappedReference);
 		}
 	}
 
@@ -160,16 +145,8 @@ class Collection extends Component implements Mappable
 				if(is_string($component->getMapped()) === false || property_exists($this->mappedReference, $component->getMapped()) === false)
 					continue;
 					
-				$refProp = new \ReflectionProperty($this->mappedReference, $component->getMapped());
-
-				if($refProp->isPublic() === false)
-					$refProp->setAccessible(true);
-
-				$refProp->setValue($this->mappedReference, $component->getMappedData());
-
-				if($refProp->isPublic() === false)
-					$refProp->setAccessible(false);
-				
+				MappableHelper::setPropertyValue($this->mappedReference, $component->getMapped(), $component->getMappedData());
+								
 				continue;
 			}
 			

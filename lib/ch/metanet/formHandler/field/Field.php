@@ -2,7 +2,7 @@
 
 namespace ch\metanet\formHandler\field;
 
-use ch\metanet\formHandler\common\Mappable;
+use ch\metanet\formHandler\mappable\Mappable;
 use ch\metanet\formHandler\component\Component;
 use ch\metanet\formHandler\listener\FormFieldListener;
 use ch\metanet\formHandler\renderer\DefaultFieldComponentRenderer;

@@ -2,7 +2,7 @@
 
 namespace ch\metanet\formHandler\component;
 
-use ch\metanet\formHandler\common\FormHandlerException;
+use ch\metanet\formHandler\exception\FormHandlerException;
 use ch\metanet\formHandler\field\Field;
 use ch\metanet\formHandler\renderer\DefaultFormComponentRenderer;
 use ch\metanet\formHandler\renderer\FormComponentRenderer;

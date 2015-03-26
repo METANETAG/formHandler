@@ -1,6 +1,6 @@
 <?php
 
-namespace ch\metanet\formHandler\common;
+namespace ch\metanet\formHandler\exception;
 
 /**
  * @author Pascal Muenst <entwicklung@metanet.ch>
