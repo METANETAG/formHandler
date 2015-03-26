@@ -2,6 +2,7 @@
 
 namespace ch\metanet\formHandler\component;
 
+use ch\metanet\formHandler\common\Mappable;
 use ch\metanet\formHandler\listener\FormFieldListener;
 
 /**
@@ -12,7 +13,7 @@ abstract class Component
 {
 	/** @var Form */
 	protected $formComponent;
-	/** @var Component */
+	/** @var Component|Mappable */
 	protected $parentComponent;
 	protected $name;
 	protected $inputData;

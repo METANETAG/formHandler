@@ -276,9 +276,8 @@ abstract class Field extends Component implements Mappable
 
 	/**
 	 * @param string $reference
-	 * @param callable $callback
 	 */
-	public function map($reference, callable $callback = null)
+	public function map($reference)
 	{
 		$this->attachedReference = $reference;
 	}

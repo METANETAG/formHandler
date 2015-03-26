@@ -20,7 +20,7 @@ class Collection extends Component implements Mappable
 	/** @var CollectionComponentRenderer */
 	protected $collectionComponentRenderer;
 	
-	protected $attachedReference;
+	protected $mappedReference;
 
 	public function __construct($name)
 	{
@@ -71,13 +71,13 @@ class Collection extends Component implements Mappable
 			/** @var Component|Mappable $component */
 			if(is_object($component->getMapped()) === true) {
 				$value = $component->getMapped();
-			} elseif(property_exists($this->attachedReference, $component->getMapped())) {
-				$refProp = new \ReflectionProperty($this->attachedReference, $component->getMapped());
+			} elseif(property_exists($this->mappedReference, $component->getMapped())) {
+				$refProp = new \ReflectionProperty($this->mappedReference, $component->getMapped());
 				
 				if($refProp->isPublic() === false)
 					$refProp->setAccessible(true);
 
-				$value = $refProp->getValue($this->attachedReference);
+				$value = $refProp->getValue($this->mappedReference);
 				
 				if($refProp->isPublic() === false)
 					$refProp->setAccessible(false);
@@ -100,6 +100,23 @@ class Collection extends Component implements Mappable
 	public function getComponents()
 	{
 		return $this->components;
+	}
+
+	public function setParentComponent(Component $parentComponent)
+	{
+		parent::setParentComponent($parentComponent);
+		
+		if(is_string($this->mappedReference) === true && property_exists($this->parentComponent->getMapped(), $this->mappedReference) === true) {
+			$refProp = new \ReflectionProperty($this->parentComponent->getMapped(), $this->mappedReference);
+
+			if($refProp->isPublic() === false)
+				$refProp->setAccessible(true);
+
+			$this->mappedReference = $refProp->getValue($this->parentComponent->getMapped());
+
+			if($refProp->isPublic() === false)
+				$refProp->setAccessible(false);
+		}
 	}
 
 	/**
@@ -140,15 +157,15 @@ class Collection extends Component implements Mappable
 					continue;
 
 				/** @var Component|Mappable $component */
-				if(is_string($component->getMapped()) === false || property_exists($this->attachedReference, $component->getMapped()) === false)
+				if(is_string($component->getMapped()) === false || property_exists($this->mappedReference, $component->getMapped()) === false)
 					continue;
 					
-				$refProp = new \ReflectionProperty($this->attachedReference, $component->getMapped());
+				$refProp = new \ReflectionProperty($this->mappedReference, $component->getMapped());
 
 				if($refProp->isPublic() === false)
 					$refProp->setAccessible(true);
 
-				$refProp->setValue($this->attachedReference, $component->getMappedData());
+				$refProp->setValue($this->mappedReference, $component->getMappedData());
 
 				if($refProp->isPublic() === false)
 					$refProp->setAccessible(false);
@@ -218,19 +235,12 @@ class Collection extends Component implements Mappable
 
 	/**
 	 * @param array|object $reference
-	 * @param callable $callback
 	 *
 	 * @throws FormHandlerException
 	 */
-	public function map($reference, callable $callback = null)
+	public function map($reference)
 	{
-		if(is_string($reference) === true) {
-			
-		} elseif(is_object($reference) === false) {
-			throw new FormHandlerException('The reference to attach has to be an object');
-		}
-		
-		$this->attachedReference = $reference;
+		$this->mappedReference = $reference;
 	}
 
 	/**
@@ -238,7 +248,7 @@ class Collection extends Component implements Mappable
 	 */
 	public function isMapped()
 	{
-		return ($this->attachedReference !== null);
+		return ($this->mappedReference !== null);
 	}
 
 	/**
@@ -246,7 +256,7 @@ class Collection extends Component implements Mappable
 	 */
 	public function getMapped()
 	{
-		return $this->attachedReference;
+		return $this->mappedReference;
 	}
 
 	/**
@@ -261,7 +271,7 @@ class Collection extends Component implements Mappable
 		elseif(is_object($data) === false)
 			throw new FormHandlerException('The value to attach has to be an object');
 		
-		$this->attachedReference = $data;
+		$this->mappedReference = $data;
 	}
 
 	/**
@@ -269,7 +279,7 @@ class Collection extends Component implements Mappable
 	 */
 	public function getMappedData()
 	{
-		return $this->attachedReference;
+		return $this->mappedReference;
 	}
 }
 

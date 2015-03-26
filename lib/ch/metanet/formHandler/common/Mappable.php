@@ -9,12 +9,15 @@ namespace ch\metanet\formHandler\common;
 interface Mappable
 {
 	/**
+	 * Maps a components value to an object or a property and vice versa
+	 * 
 	 * @param mixed $reference
-	 * @param callable $callback An optional callback which converts the given value to field compatible one
 	 */
-	public function map($reference, callable $callback = null);
+	public function map($reference);
 
 	/**
+	 * Returns true if the component is mapped or false if not
+	 * 
 	 * @return bool
 	 */
 	public function isMapped();

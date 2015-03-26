@@ -21,12 +21,13 @@ class CheckboxOptionsFieldRenderer extends OptionsFieldRenderer
 		$fieldValue = (array)$field->getValue(false);
 		
 		$html = '<ul' . $this->getAttributesAsHtml() . '>';
-		
+		$multiBraces = ($optionsCount > 1) ? '[]' : null;
+
 		foreach($field->getOptions() as $key => $val) {
 			$attrId = ' id="' . $field->getName() . (($optionsCount !== 1) ?  '-' . $key : null) . '"';
 			
 			$checked = in_array($key, $fieldValue) ? ' checked' : null;
-			$html .= '<li><label><input type="checkbox" name="' . $field->getFormIdentifierAsString() . '" value="' . $key . '"' . $attrId . $checked . $required . '> ' . $val . '</label></li>';
+			$html .= '<li><label><input type="checkbox" name="' . $field->getFormIdentifierAsString() . $multiBraces . '" value="' . $key . '"' . $attrId . $checked . $required . '> ' . $val . '</label></li>';
 		}
 
 		$html .= '</ul>';

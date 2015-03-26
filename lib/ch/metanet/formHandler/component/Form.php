@@ -2,6 +2,7 @@
 
 namespace ch\metanet\formHandler\component;
 
+use ch\metanet\formHandler\common\FormHandlerException;
 use ch\metanet\formHandler\field\Field;
 use ch\metanet\formHandler\renderer\DefaultFormComponentRenderer;
 use ch\metanet\formHandler\renderer\FormComponentRenderer;
@@ -127,8 +128,14 @@ class Form extends Collection
 	{
 		return $this->method;
 	}
-	
-	
+
+	public function map($reference)
+	{
+		if(is_object($reference) === false)
+			throw new FormHandlerException('You have to map the form component to a class instance');
+		
+		$this->mappedReference = $reference;
+	}
 }
 
 /* EOF */ 
