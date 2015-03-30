@@ -8,15 +8,14 @@ use ch\metanet\formHandler\field\OptionsField;
 /**
  * @author Pascal Muenst <entwicklung@metanet.ch>
  * @copyright Copyright (c) 2014, METANET AG
- * @version 1.0.0
  */
-class SelectMultipleOptionsFieldRenderer extends OptionsFieldRenderer {
-	function __construct()
+class SelectMultipleOptionsFieldRenderer extends OptionsFieldRenderer
+{
+	public function __construct()
 	{
 		$this->attributes = array('multiple' => null);
 		$this->addLockedAttributes('multiple');
 	}
-
 
 	/**
 	 * @param OptionsField $field
@@ -26,7 +25,7 @@ class SelectMultipleOptionsFieldRenderer extends OptionsFieldRenderer {
 	{
 		/** @var OptionsField $field */
 		$fieldValue = is_array($field->getValue())?$field->getValue():array();
-		$html = '<select name="' . $field->getName() . '[]" id="' . $field->getName() . '"' . $this->getAttributesAsHtml() . '>';
+		$html = '<select name="' . $field->getFormIdentifierAsString() . '[]" id="' . $field->getName() . '"' . $this->getAttributesAsHtml() . '>';
 
 		$html .= $this->renderOptions($field->getOptions(), $fieldValue);
 
@@ -35,7 +34,7 @@ class SelectMultipleOptionsFieldRenderer extends OptionsFieldRenderer {
 		return $html;
 	}
 
-	private function renderOptions(array $options, $fieldValue)
+	protected function renderOptions(array $options, $fieldValue)
 	{
 		$html = '';
 
