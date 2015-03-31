@@ -7,13 +7,14 @@ use ch\metanet\formHandler\field\DateTimeField;
 /**
  * @author Pascal Muenst <entwicklung@metanet.ch>
  * @copyright Copyright (c) 2014, METANET AG
- * @version 1.0.0
  */
-class SelectTimeFieldRenderer extends TimeFieldRenderer {
+class SelectTimeFieldRenderer extends TimeFieldRenderer
+{
 	protected $minutesStep;
 	protected $secondsStep;
 
-	function __construct($minutesStep = 1, $secondsStep = 1) {
+	public function __construct($minutesStep = 1, $secondsStep = 1)
+	{
 		$this->minutesStep = $minutesStep;
 		$this->secondsStep = $secondsStep;
 	}
@@ -22,7 +23,8 @@ class SelectTimeFieldRenderer extends TimeFieldRenderer {
 	 * @param DateTimeField $field
 	 * @return string
 	 */
-	public function render(DateTimeField $field) {
+	public function render(DateTimeField $field)
+	{
 		$field->setLinkedLabel(false);
 
 		if(is_array($field->getValue()) === false) {
@@ -40,7 +42,8 @@ class SelectTimeFieldRenderer extends TimeFieldRenderer {
 		return $timeHtml;
 	}
 
-	public function renderHour(DateTimeField $field) {
+	public function renderHour(DateTimeField $field)
+	{
 		$fieldValue = $field->getValue();
 
 		$hourHtml = '<select name="' . $field->getName() . '[hour]" id="' . $field->getName() . '-hour" class="form-date-hour">
@@ -56,7 +59,8 @@ class SelectTimeFieldRenderer extends TimeFieldRenderer {
 		return $hourHtml;
 	}
 
-	public function renderMin(DateTimeField $field) {
+	public function renderMin(DateTimeField $field)
+	{
 		$fieldValue = $field->getValue();
 
 		$hourHtml = '<select name="' . $field->getName() . '[min]" id="' . $field->getName() . '-min" class="form-date-min">
@@ -72,7 +76,8 @@ class SelectTimeFieldRenderer extends TimeFieldRenderer {
 		return $hourHtml;
 	}
 
-	public function renderSec(DateTimeField $field) {
+	public function renderSec(DateTimeField $field)
+	{
 		$fieldValue = $field->getValue();
 
 		$hourHtml = '<select name="' . $field->getName() . '[sec]" id="' . $field->getName() . '-hour" class="form-date-sec">
