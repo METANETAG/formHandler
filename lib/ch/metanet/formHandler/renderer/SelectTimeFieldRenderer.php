@@ -46,7 +46,7 @@ class SelectTimeFieldRenderer extends TimeFieldRenderer
 	{
 		$fieldValue = $field->getValue();
 
-		$hourHtml = '<select name="' . $field->getName() . '[hour]" id="' . $field->getName() . '-hour" class="form-date-hour">
+		$hourHtml = '<select name="' . $field->getFormIdentifierAsString() . '[hour]" id="' . $field->getName() . '-hour" class="form-date-hour">
 			<option>--</option>';
 
 		for($i = 0; $i <= 23; ++$i) {
@@ -63,7 +63,7 @@ class SelectTimeFieldRenderer extends TimeFieldRenderer
 	{
 		$fieldValue = $field->getValue();
 
-		$hourHtml = '<select name="' . $field->getName() . '[min]" id="' . $field->getName() . '-min" class="form-date-min">
+		$hourHtml = '<select name="' . $field->getFormIdentifierAsString() . '[min]" id="' . $field->getName() . '-min" class="form-date-min">
 			<option>--</option>';
 
 		for($i = 0; $i <= 59; $i = $i+$this->minutesStep) {
@@ -80,7 +80,7 @@ class SelectTimeFieldRenderer extends TimeFieldRenderer
 	{
 		$fieldValue = $field->getValue();
 
-		$hourHtml = '<select name="' . $field->getName() . '[sec]" id="' . $field->getName() . '-hour" class="form-date-sec">
+		$hourHtml = '<select name="' . $field->getFormIdentifierAsString() . '[sec]" id="' . $field->getName() . '-hour" class="form-date-sec">
 			<option>--</option>';
 
 		for($i = 0; $i <= 59; $i = $i+$this->secondsStep) {

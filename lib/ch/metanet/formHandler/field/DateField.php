@@ -59,16 +59,15 @@ class DateField extends Field
 			return true;
 
 		if(is_array($this->value) === true) {
-			return (
-				(isset($this->value['day']) !== false && mb_strlen($this->value['day']) > 0 && $this->value['day'] !== '--') ||
-				(isset($this->value['month']) !== false && mb_strlen($this->value['month'] && $this->value['month'] !== '--') > 0) ||
-				(isset($this->value['year']) !== false && mb_strlen($this->value['year'] && $this->value['year'] !== '----') > 0)
+			return !(
+				(isset($this->value['day']) !== false && mb_strlen($this->value['day']) > 0) ||
+				(isset($this->value['month']) !== false && mb_strlen($this->value['month']) > 0) ||
+				(isset($this->value['year']) !== false && mb_strlen($this->value['year']) > 0)
 			);
 		}
-
+		
 		return false;
 	}
-
 
 	protected function validateDate()
 	{
