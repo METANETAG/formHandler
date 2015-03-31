@@ -2,13 +2,12 @@
 
 
 namespace ch\metanet\formHandler\rule;
-use ch\metanet\formHandler\field\Field;
 
+use ch\metanet\formHandler\field\Field;
 
 /**
  * @author Pascal Muenst <entwicklung@metanet.ch>
  * @copyright Copyright (c) 2014, METANET AG
- * @version 1.0.0
  */
 class ValidEmailAddressRule extends Rule
 {

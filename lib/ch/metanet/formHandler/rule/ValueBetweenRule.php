@@ -7,9 +7,9 @@ use ch\metanet\formHandler\field\Field;
 /**
  * @author Pascal Muenst <entwicklung@metanet.ch>
  * @copyright Copyright (c) 2014, METANET AG
- * @version 1.0.0
  */
-class ValueBetweenRule extends Rule {
+class ValueBetweenRule extends Rule
+{
 	protected $minValue;
 	protected $maxValue;
 
@@ -18,7 +18,8 @@ class ValueBetweenRule extends Rule {
 	 * @param mixed $maxValue The maximum allowed value
 	 * @param string $errorMessage The error message on failure
 	 */
-	function __construct($minValue, $maxValue, $errorMessage) {
+	function __construct($minValue, $maxValue, $errorMessage)
+	{
 		parent::__construct($errorMessage);
 
 		$this->minValue = $minValue;
@@ -30,7 +31,8 @@ class ValueBetweenRule extends Rule {
 	 * @return bool|mixed
 	 * @throws \UnexpectedValueException
 	 */
-	public function validate(Field $field) {
+	public function validate(Field $field)
+	{
 		if($field->isValueEmpty() === true)
 			return true;
 
@@ -44,11 +46,13 @@ class ValueBetweenRule extends Rule {
 			throw new \UnexpectedValueException('Could not handle field value for rule ' . __CLASS__);
 	}
 
-	private function checkValueBetweenScalar($value) {
+	private function checkValueBetweenScalar($value)
+	{
 		return ($value >= $this->minValue && $value <= $this->maxValue);
 	}
 
-	private function checkValueBetweenArray($value) {
+	private function checkValueBetweenArray($value)
+	{
 		foreach($value as $val) {
 			if(is_scalar($val) === true && $this->checkValueBetweenScalar($val) === false) {
 				return false;

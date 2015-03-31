@@ -7,16 +7,17 @@ use ch\metanet\formHandler\field\Field;
 /**
  * @author Pascal Muenst <entwicklung@metanet.ch>
  * @copyright Copyright (c) 2014, METANET AG
- * @version 1.0.0
  */
-class RegexRule extends Rule {
+class RegexRule extends Rule
+{
 	protected $pattern;
 
 	/**
 	 * @param string $pattern The pattern to check against
 	 * @param string $errorMessage The error message if validation fails
 	 */
-	public function __construct($pattern, $errorMessage) {
+	public function __construct($pattern, $errorMessage)
+	{
 		parent::__construct($errorMessage);
 
 		$this->pattern = $pattern;
@@ -27,7 +28,8 @@ class RegexRule extends Rule {
 	 * @throws \UnexpectedValueException
 	 * @return bool
 	 */
-	public function validate(Field $field) {
+	public function validate(Field $field)
+	{
 		if($field->isValueEmpty() === true)
 			return true;
 
@@ -47,7 +49,8 @@ class RegexRule extends Rule {
 		}
 	}
 
-	protected function checkAgainstPattern($value) {
+	protected function checkAgainstPattern($value)
+	{
 		return (preg_match($this->pattern, $value) === 1);
 	}
 }

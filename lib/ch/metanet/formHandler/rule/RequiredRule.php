@@ -10,13 +10,15 @@ use ch\metanet\formHandler\field\Field;
  * @copyright Copyright (c) 2014, METANET AG
  * @version 1.0.0
  */
-class RequiredRule extends Rule {
+class RequiredRule extends Rule
+{
 	/**
 	 * @param Field $field
 	 * @return bool|mixed
 	 * @throws \UnexpectedValueException
 	 */
-	public function validate(Field $field) {
+	public function validate(Field $field)
+	{
 		return !$field->isValueEmpty();
 	}
 }

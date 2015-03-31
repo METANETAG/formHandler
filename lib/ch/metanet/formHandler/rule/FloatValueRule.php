@@ -8,8 +8,8 @@ use ch\metanet\formHandler\field\Field;
  * @author Pascal Muenst <entwicklung@metanet.ch>
  * @copyright Copyright (c) 2014, METANET AG
  */
-class FloatValueRule extends Rule {
-	
+class FloatValueRule extends Rule
+{
 	/**
 	 * @param Field $field The field instance to check against
 	 * @return bool

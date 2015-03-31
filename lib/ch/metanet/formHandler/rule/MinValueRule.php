@@ -8,7 +8,8 @@ use ch\metanet\formHandler\field\Field;
  * @author Pascal Muenst <entwicklung@metanet.ch>
  * @copyright Copyright (c) 2014, METANET AG
  */
-class MinValueRule extends Rule {
+class MinValueRule extends Rule
+{
 	protected $minValue;
 
 	/**

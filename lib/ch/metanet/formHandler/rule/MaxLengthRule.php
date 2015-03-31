@@ -9,14 +9,16 @@ use ch\metanet\formHandler\field\Field;
  * @copyright Copyright (c) 2014, METANET AG
  * @version 1.0.0
  */
-class MaxLengthRule extends Rule {
+class MaxLengthRule extends Rule
+{
 	protected $maxLength;
 
 	/**
 	 * @param int $maxLength
 	 * @param string $errorMessage
 	 */
-	function __construct($maxLength, $errorMessage) {
+	function __construct($maxLength, $errorMessage)
+	{
 		parent::__construct($errorMessage);
 
 		$this->maxLength = $maxLength;
@@ -27,7 +29,8 @@ class MaxLengthRule extends Rule {
 	 * @return bool
 	 * @throws \UnexpectedValueException
 	 */
-	public function validate(Field $field) {
+	public function validate(Field $field)
+	{
 		if($field->isValueEmpty() === true)
 			return true;
 
@@ -41,7 +44,8 @@ class MaxLengthRule extends Rule {
 			throw new \UnexpectedValueException('Could not handle field value for rule ' . __CLASS__);
 	}
 
-	private function checkValueLengthAgainst($valueLength) {
+	private function checkValueLengthAgainst($valueLength)
+	{
 		return ($valueLength <= $this->maxLength);
 	}
 }
