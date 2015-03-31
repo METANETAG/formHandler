@@ -24,4 +24,4 @@ class NumericValueRule extends Rule
 	}
 }
 
-/* EOF */ 
+/* EOF */

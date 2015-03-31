@@ -50,4 +50,4 @@ class MinLengthRule extends Rule
 	}
 }
 
-/* EOF */ 
+/* EOF */

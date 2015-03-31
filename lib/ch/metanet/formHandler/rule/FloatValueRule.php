@@ -29,4 +29,4 @@ class FloatValueRule extends Rule
 	}
 }
 
-/* EOF */ 
+/* EOF */

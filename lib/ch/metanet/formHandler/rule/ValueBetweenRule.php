@@ -65,4 +65,4 @@ class ValueBetweenRule extends Rule
 	}
 }
 
-/* EOF */ 
+/* EOF */

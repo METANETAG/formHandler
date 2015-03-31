@@ -23,4 +23,4 @@ class RequiredRule extends Rule
 	}
 }
 
-/* EOF */ 
+/* EOF */

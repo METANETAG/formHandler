@@ -61,4 +61,4 @@ class ValidEmailAddressRule extends Rule
 	}
 }
 
-/* EOF */ 
+/* EOF */

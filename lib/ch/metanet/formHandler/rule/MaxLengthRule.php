@@ -50,4 +50,4 @@ class MaxLengthRule extends Rule
 	}
 }
 
-/* EOF */ 
+/* EOF */
