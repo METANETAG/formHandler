@@ -92,11 +92,10 @@ class DateField extends Field
 			$dateValue = $this->value['year'] . '-' . $this->value['month'] . '-' . $this->value['day'];
 			$this->allowedDateFormats = array('Y-m-d', 'y-m-d');
 		}
-
-		$dtObj = $this->createDateFromFormat($dateValue);
-
-		if($dtObj === false) {
+		
+		if($this->createDateFromFormat($dateValue) === false) {
 			$this->errors[] = $this->errorMessageInvalidDate;
+			
 			return false;
 		}
 
@@ -106,8 +105,15 @@ class DateField extends Field
 	protected function createDateFromFormat($dateString)
 	{
 		foreach($this->allowedDateFormats as $df) {
-			if(($dt = \DateTime::createFromFormat($df, $dateString)) !== false)
-				return $dt;
+			if(($dt = \DateTime::createFromFormat($df, $dateString)) !== false) {
+				$lastErrors = $dt->getLastErrors();
+
+				if($lastErrors['warning_count'] > 0 || $lastErrors['error_count']) {
+					return false;
+				} else {
+					return $dt;
+				}
+			}
 		}
 
 		return false;
