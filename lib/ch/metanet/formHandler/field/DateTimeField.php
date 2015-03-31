@@ -52,21 +52,18 @@ class DateTimeField extends DateField
 
 	public function isValueEmpty()
 	{
-		$isEmpty = parent::isValueEmpty();
+		if(parent::isValueEmpty() === true)
+			return true;
 
-		if($isEmpty === false || is_array($this->value) === false)
-			return $isEmpty;
+		if(is_array($this->value) === true) {
+			return !(
+				(isset($this->value['hour']) !== false && mb_strlen($this->value['hour']) > 0) ||
+				(isset($this->value['min']) !== false && mb_strlen($this->value['min']) > 0) ||
+				(isset($this->value['sec']) !== false && mb_strlen($this->value['sec']) > 0)
+			);
+		}
 
-		$dateEmpty = true;
-
-		if(
-			(isset($this->value['hour']) !== false && mb_strlen($this->value['hour']) > 0) ||
-			(isset($this->value['min']) !== false && mb_strlen($this->value['min']) > 0) ||
-			(isset($this->value['sec']) !== false && mb_strlen($this->value['sec']) > 0)
-		)
-			$dateEmpty = false;
-
-		return $dateEmpty;
+		return false;
 	}
 
 	protected function validateDate()
@@ -104,7 +101,7 @@ class DateTimeField extends DateField
 			if($this->hasErrors() === true)
 				return false;
 
-			$dateValue = $this->value['year'] . '-' . $this->value['month'] . '-' . $this->value['day'] . ' ' . $this->value['day'] . ':' . $this->value['min'] . ':' . $this->value['sec'];
+			$dateValue = $this->value['year'] . '-' . $this->value['month'] . '-' . $this->value['day'] . ' ' . $this->value['hour'] . ':' . $this->value['min'] . ':' . $this->value['sec'];
 			$this->allowedDateFormats = array('Y-m-d H:i:s', 'y-m-d H:i:s');
 		}
 
