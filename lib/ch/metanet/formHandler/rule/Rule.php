@@ -41,4 +41,4 @@ abstract class Rule
 	}
 }
 
-/* EOF */ 
+/* EOF */
