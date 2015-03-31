@@ -115,7 +115,7 @@ class DateField extends Field
 			
 			$lastErrors = $dt->getLastErrors();
 
-			if($lastErrors['warning_count'] > 0 || $lastErrors['error_count']) {
+			if($lastErrors['warning_count'] > 0 || $lastErrors['error_count'] > 0) {
 				return false;
 			}
 			
