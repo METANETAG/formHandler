@@ -1,17 +1,19 @@
 <?php
 
 namespace ch\metanet\formHandler\rule;
+
 use ch\metanet\formHandler\field\Field;
 
 /**
  * @author Pascal Muenst <entwicklung@metanet.ch>
  * @copyright Copyright (c) 2014, METANET AG
- * @version 1.0.0
  */
-abstract class Rule {
+abstract class Rule
+{
 	protected $errorMessage;
 
-	public function __construct($errorMessage) {
+	public function __construct($errorMessage)
+	{
 		$this->errorMessage = $errorMessage;
 	}
 
@@ -24,7 +26,8 @@ abstract class Rule {
 	/**
 	 * @param string $errorMessage
 	 */
-	public function setErrorMessage($errorMessage) {
+	public function setErrorMessage($errorMessage)
+	{
 		$this->errorMessage = $errorMessage;
 	}
 
@@ -32,7 +35,8 @@ abstract class Rule {
 	 * The error message specified for this Rule instance
 	 * @return string
 	 */
-	public function getErrorMessage() {
+	public function getErrorMessage()
+	{
 		return $this->errorMessage;
 	}
 }
