@@ -60,9 +60,9 @@ class DateTimeField extends DateField
 		$dateEmpty = true;
 
 		if(
-			(isset($this->value['hour']) !== false && mb_strlen($this->value['hour']) > 0 && $this->value['hour'] !== '--') ||
-			(isset($this->value['min']) !== false && mb_strlen($this->value['min'] && $this->value['min'] !== '--') > 0) ||
-			(isset($this->value['sec']) !== false && mb_strlen($this->value['sec'] && $this->value['sec'] !== '--') > 0)
+			(isset($this->value['hour']) !== false && mb_strlen($this->value['hour']) > 0) ||
+			(isset($this->value['min']) !== false && mb_strlen($this->value['min']) > 0) ||
+			(isset($this->value['sec']) !== false && mb_strlen($this->value['sec']) > 0)
 		)
 			$dateEmpty = false;
 

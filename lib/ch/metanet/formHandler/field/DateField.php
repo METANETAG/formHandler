@@ -102,18 +102,24 @@ class DateField extends Field
 		return true;
 	}
 
+	/**
+	 * @param string $dateString
+	 *
+	 * @return bool|\DateTime
+	 */
 	protected function createDateFromFormat($dateString)
 	{
 		foreach($this->allowedDateFormats as $df) {
-			if(($dt = \DateTime::createFromFormat($df, $dateString)) !== false) {
-				$lastErrors = $dt->getLastErrors();
+			if(($dt = \DateTime::createFromFormat($df, $dateString)) === false)
+				continue;
+			
+			$lastErrors = $dt->getLastErrors();
 
-				if($lastErrors['warning_count'] > 0 || $lastErrors['error_count']) {
-					return false;
-				} else {
-					return $dt;
-				}
+			if($lastErrors['warning_count'] > 0 || $lastErrors['error_count']) {
+				return false;
 			}
+			
+			return $dt;
 		}
 
 		return false;
@@ -133,6 +139,7 @@ class DateField extends Field
 	public function setErrorMessageInvalidDate($errorMessageInvalidDate)
 	{
 		$this->errorMessageInvalidDate = $errorMessageInvalidDate;
+		
 	}
 
 	/**
