@@ -19,6 +19,7 @@ abstract class Rule
 
 	/**
 	 * @param Field $field The field instance to check against
+	 * 
 	 * @return bool
 	 */
 	public abstract function validate(Field $field);
@@ -32,7 +33,8 @@ abstract class Rule
 	}
 
 	/**
-	 * The error message specified for this Rule instance
+	 * The error message specified for this instance
+	 * 
 	 * @return string
 	 */
 	public function getErrorMessage()
