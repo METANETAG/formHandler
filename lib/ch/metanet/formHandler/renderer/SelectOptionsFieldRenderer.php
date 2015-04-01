@@ -11,17 +11,20 @@ use ch\metanet\formHandler\field\OptionsField;
  */
 class SelectOptionsFieldRenderer extends OptionsFieldRenderer
 {
+	protected $renderOptions;
+
 	/**
 	 * @param OptionsField $field The OptionField to render
 	 * @return string The HTML of the rendered select field
 	 */
 	public function render(OptionsField $field)
 	{
-		$required = ($field->hasRule('ch\metanet\formHandler\rule\RequiredRule') === true)?' aria-required="true"':null;
+		$required = ($field->hasRule('ch\metanet\formHandler\rule\RequiredRule') === true) ? ' aria-required="true"' : null;
 
 		$html = '<select name="' . $field->getFormIdentifierAsString() . '" id="' . $field->getName() . '"' . $this->getAttributesAsHtml() . $required . '>';
 
-		$html .= $this->renderOptions($field->getOptions(), $field->getValue());
+		// Render the alternate options structure if set else fallback to the fields options array
+		$html .= $this->renderOptions(is_array($this->renderOptions) ? $this->renderOptions : $field->getOptions(), $field->getValue());
 
 		$html .= '</select>';
 
@@ -40,7 +43,7 @@ class SelectOptionsFieldRenderer extends OptionsFieldRenderer
 
 		foreach($options as $key => $val) {
 			if(is_array($val) === false) {
-				$selected = ($key == $selection)?' selected':null;
+				$selected = ($key == $selection) ? ' selected' : null;
 				$html .= '<option value="' . $key . '"' . $selected . '>' . $val . '</option>';
 			} else {
 				$html .= '<optgroup label="' . $key . '">' . $this->renderOptions($val, $selection) . '</optgroup>';
@@ -49,6 +52,24 @@ class SelectOptionsFieldRenderer extends OptionsFieldRenderer
 
 		return $html;
 	}
+
+	/**
+	 * @return array|null
+	 */
+	public function getRenderOptions()
+	{
+		return $this->renderOptions;
+	}
+	
+	/**
+	 * Set a different options structure to render
+	 * 
+	 * @param array|null $renderOptions
+	 */
+	public function setRenderOptions($renderOptions)
+	{
+		$this->renderOptions = $renderOptions;
+	}
 }
 
-/* EOF */ 
+/* EOF */
