@@ -238,7 +238,7 @@ abstract class Field extends Component
 		return $this->fieldComponentRenderer;
 	}
 
-	public function setInputData($data)
+	public function setRequestData($data)
 	{
 		$this->inputData = $data;
 		
@@ -246,7 +246,7 @@ abstract class Field extends Component
 			$this->value = $this->inputData;
 	}
 
-	public function getInputData()
+	public function getRequestData()
 	{
 		return $this->value;
 	}

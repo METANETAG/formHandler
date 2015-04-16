@@ -8,10 +8,11 @@ use ch\metanet\formHandler\field\OptionsField;
 /**
  * @author Pascal Muenst <entwicklung@metanet.ch>
  * @copyright Copyright (c) 2014, METANET AG
- * @version 1.0.0
  */
-class InputFormFieldTest extends \PHPUnit_Framework_TestCase {
-	public function testSetValue() {
+class InputFieldTest extends \PHPUnit_Framework_TestCase
+{
+	public function testSetValue()
+	{
 		$field = new InputField('field1', 'field1');
 
 		$field->setValue('test');
@@ -21,7 +22,8 @@ class InputFormFieldTest extends \PHPUnit_Framework_TestCase {
 		$this->assertNull($field->getValue());
 	}
 
-	public function testIsValueEmpty() {
+	public function testIsValueEmpty()
+	{
 		$field = new InputField('field1', 'field1');
 
 		$this->assertEquals($field->isValueEmpty(), true, 'Null value');

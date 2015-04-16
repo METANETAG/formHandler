@@ -10,10 +10,11 @@ use ch\metanet\formHandler\rule\MaxLengthRule;
 /**
  * @author Pascal Muenst <entwicklung@metanet.ch>
  * @copyright Copyright (c) 2014, METANET AG
- * @version 1.0.0
  */
-class FloatValueRuleTest extends \PHPUnit_Framework_TestCase {
-	public function testDifferentFloatFormats() {
+class FloatValueRuleTest extends \PHPUnit_Framework_TestCase
+{
+	public function testDifferentFloatFormats()
+	{
 		$rule = new FloatValueRule('Not a valid float value');
 		$field = new InputField('test', 'test');
 		

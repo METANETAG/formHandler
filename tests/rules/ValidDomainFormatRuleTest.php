@@ -8,7 +8,6 @@ use ch\metanet\formHandler\rule\ValidDomainFormatRule;
 /**
  * @author Pascal Muenst <entwicklung@metanet.ch>
  * @copyright Copyright (c) 2014, METANET AG
- * @version 1.0.0
  */
 class ValidDomainFormatRuleTest extends \PHPUnit_Framework_TestCase
 {

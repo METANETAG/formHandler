@@ -10,10 +10,11 @@ use ch\metanet\formHandler\rule\RequiredRule;
 /**
  * @author Pascal Muenst <entwicklung@metanet.ch>
  * @copyright Copyright (c) 2014, METANET AG
- * @version 1.0.0
  */
-class RequiredRuleTest extends \PHPUnit_Framework_TestCase {
-	public function testRequiredRuleSingleValue() {
+class RequiredRuleTest extends \PHPUnit_Framework_TestCase
+{
+	public function testRequiredRuleSingleValue()
+	{
 		$rule = new RequiredRule('this field is required');
 		$field = new InputField('test', 'test');
 
@@ -27,7 +28,8 @@ class RequiredRuleTest extends \PHPUnit_Framework_TestCase {
 		$this->assertSame($rule->validate($field), false, 'Empty (null)');
 	}
 
-	public function testRequiredRuleMultipleValue() {
+	public function testRequiredRuleMultipleValue()
+	{
 		$rule = new RequiredRule('this field is required');
 		$field = new OptionsField('test', 'test', array(1 => 'apple', 2 => 'pear', 3 => 'cherry'));
 

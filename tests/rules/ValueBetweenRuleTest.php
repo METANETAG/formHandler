@@ -10,10 +10,11 @@ use ch\metanet\formHandler\rule\ValueBetweenRule;
 /**
  * @author Pascal Muenst <entwicklung@metanet.ch>
  * @copyright Copyright (c) 2014, METANET AG
- * @version 1.0.0
  */
-class ValueBetweenRuleTest extends \PHPUnit_Framework_TestCase {
-	public function testValueBetweenRuleSingleValueInteger() {
+class ValueBetweenRuleTest extends \PHPUnit_Framework_TestCase
+{
+	public function testValueBetweenRuleSingleValueInteger()
+	{
 		$rule = new ValueBetweenRule(5, 10, 'The value has to be between 5 and 10');
 		$field = new InputField('test', 'test');
 
@@ -45,7 +46,8 @@ class ValueBetweenRuleTest extends \PHPUnit_Framework_TestCase {
 		$this->assertSame($rule->validate($field), true, 'Value 00010');
 	}
 
-	public function testValueBetweenRuleSingleValueString() {
+	public function testValueBetweenRuleSingleValueString()
+	{
 		$rule = new ValueBetweenRule('a', 'd', 'The value has to be between "a" and "d"');
 		$field = new InputField('test', 'test');
 
@@ -62,7 +64,8 @@ class ValueBetweenRuleTest extends \PHPUnit_Framework_TestCase {
 		$this->assertSame($rule->validate($field), false, 'Value z');
 	}
 
-	public function testMaxLengthRuleMultipleValues() {
+	public function testMaxLengthRuleMultipleValues()
+	{
 		$rule = new ValueBetweenRule(5, 10, 'The value has to be between 5 and 10');
 		$field = new OptionsField('test', 'test', array(1 => 'apple', 2 => 'pear', 3 => 'cherry'));
 

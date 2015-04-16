@@ -122,12 +122,12 @@ abstract class Component
 	 * Sets the input data to fill and validate the connected form fields against
 	 * @param mixed $data The input data (e.x. $_GET, $_POST, $_FILES or a merged array)
 	 */
-	public abstract function setInputData($data);
+	public abstract function setRequestData($data);
 
 	/**
 	 * @return array
 	 */
-	public function getInputData()
+	public function getRequestData()
 	{
 		return $this->inputData;
 	}

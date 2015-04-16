@@ -9,10 +9,11 @@ use ch\metanet\formHandler\rule\MaxLengthRule;
 /**
  * @author Pascal Muenst <entwicklung@metanet.ch>
  * @copyright Copyright (c) 2014, METANET AG
- * @version 1.0.0
  */
-class MaxLengthRuleTest extends \PHPUnit_Framework_TestCase {
-	public function testMaxLengthRuleSingleValue() {
+class MaxLengthRuleTest extends \PHPUnit_Framework_TestCase
+{
+	public function testMaxLengthRuleSingleValue()
+	{
 		$rule = new MaxLengthRule(2, 'too long');
 		$field = new InputField('test', 'test');
 		$field->setValue('abc');
@@ -26,7 +27,8 @@ class MaxLengthRuleTest extends \PHPUnit_Framework_TestCase {
 		$this->assertSame($rule->validate($field), true);
 	}
 
-	public function testMaxLengthRuleMultipleValues() {
+	public function testMaxLengthRuleMultipleValues()
+	{
 		$rule = new MaxLengthRule(2, 'too long');
 		$field = new OptionsField('test', 'test', array(1 => 'apple', 2 => 'pear', 3 => 'cherry'));
 

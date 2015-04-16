@@ -63,7 +63,7 @@ class Collection extends Component
 		$this->components[$component->getName()] = $component;
 		
 		// Set value if there is one
-		$component->setInputData(is_array($this->inputData) && array_key_exists($component->getName(), $this->inputData) ? $this->inputData[$component->getName()] : null);
+		$component->setRequestData(is_array($this->inputData) && array_key_exists($component->getName(), $this->inputData) ? $this->inputData[$component->getName()] : null);
 	}
 
 	/**
@@ -130,15 +130,28 @@ class Collection extends Component
 		return $validation;
 	}
 
-	public function setInputData($data)
+	/**
+	 * @param mixed $data
+	 */
+	public function setRequestData($data)
 	{
 		$this->inputData = (array)$data;
 		
 		// Delegate values
 		foreach($this->components as $component) {
 			/** @var Field $component */
-			$component->setInputData(array_key_exists($component->getName(), $this->inputData) ? $this->inputData[$component->getName()] : null);
+			$component->setRequestData(array_key_exists($component->getName(), $this->inputData) ? $this->inputData[$component->getName()] : null);
 		}
+	}
+
+	/**
+	 * @deprecated Deprecated use setRequestData() instead
+	 * 
+	 * @param mixed $data
+	 */
+	public function setInputData($data)
+	{
+		$this->setRequestData($data);
 	}
 
 	/**

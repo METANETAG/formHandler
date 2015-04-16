@@ -11,9 +11,9 @@ use ch\metanet\formHandler\rule\ValueBetweenRule;
 /**
  * @author Pascal Muenst <entwicklung@metanet.ch>
  * @copyright Copyright (c) 2014, METANET AG
- * @version 1.0.0
  */
-class ValidValueRuleTest extends \PHPUnit_Framework_TestCase {
+class ValidValueRuleTest extends \PHPUnit_Framework_TestCase
+{
 	public function testSingeValue()
 	{
 		$rule = new ValidValueRule('foo', 'This not a valid value');
@@ -29,7 +29,8 @@ class ValidValueRuleTest extends \PHPUnit_Framework_TestCase {
 		$this->assertSame($rule->validate($field), true, 'Valid value');
 	}
 	
-	public function testMultipleValues() {
+	public function testMultipleValues()
+	{
 		$rule = new ValidValueRule(array('foo', 42), 'This not a valid value');
 		$field = new InputField('test', 'test');
 

@@ -9,10 +9,11 @@ use ch\metanet\formHandler\rule\MinLengthRule;
 /**
  * @author Pascal Muenst <entwicklung@metanet.ch>
  * @copyright Copyright (c) 2014, METANET AG
- * @version 1.0.0
  */
-class MinLengthRuleTest extends \PHPUnit_Framework_TestCase {
-	public function testMinLengthRuleSingleValue() {
+class MinLengthRuleTest extends \PHPUnit_Framework_TestCase
+{
+	public function testMinLengthRuleSingleValue()
+	{
 		$rule = new MinLengthRule(2, 'too short');
 		$field = new InputField('test', 'test');
 		$field->setValue('abc');
@@ -20,7 +21,7 @@ class MinLengthRuleTest extends \PHPUnit_Framework_TestCase {
 		$this->assertSame($rule->validate($field), true, 'Long enough');
 
 		$field->setValue('ab');
-		$this->assertSame($rule->validate($field), true, 'On bounderies');
+		$this->assertSame($rule->validate($field), true, 'On boundaries');
 
 		$field->setValue('');
 		$this->assertSame($rule->validate($field), true, 'Zero length');
@@ -29,7 +30,8 @@ class MinLengthRuleTest extends \PHPUnit_Framework_TestCase {
 		$this->assertSame($rule->validate($field), true, 'Zero length');
 	}
 
-	public function testMinLengthRuleMultipleValues() {
+	public function testMinLengthRuleMultipleValues()
+	{
 		$rule = new MinLengthRule(2, 'too short');
 		$field = new OptionsField('test', 'test', array(1 => 'apple', 2 => 'pear', 3 => 'cherry'));
 
