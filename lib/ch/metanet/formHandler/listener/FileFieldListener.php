@@ -9,22 +9,28 @@ use ch\metanet\formHandler\field\FileField;
  * @author Pascal Muenst <entwicklung@metanet.ch>
  * @copyright Copyright (c) 2014, METANET AG
  */
-class FileFieldListener extends FormFieldListener
+abstract class FileFieldListener extends FormFieldListener
 {
 	/**
-	 * @param Form $formHandler
-	 * @param FileField $field
+	 * Gets executed if the file was uploaded successfully
+	 * 
+	 * @param Form $form The parent Form component
+	 * @param FileField $field The FileField instance
+	 * @param array $fileInfo Information about the uploaded file
 	 */
-	public function onUploadSuccess(Form $formHandler, FileField $field)
+	public function onUploadSuccess(Form $form, FileField $field, array $fileInfo)
 	{
 
 	}
 
 	/**
-	 * @param Form $formHandler
-	 * @param FileField $file
+	 * Gets executed if the file upload failed
+	 * 
+	 * @param Form $form The parent Form component
+	 * @param FileField $file The FileField instance
+	 * @param array $fileInfo Information about the uploaded file
 	 */
-	public function onUploadFail(Form $formHandler, FileField $file)
+	public function onUploadFail(Form $form, FileField $file, array $fileInfo)
 	{
 
 	}

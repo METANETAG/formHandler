@@ -28,9 +28,26 @@ abstract class Component
 		$this->errors = array();
 		$this->index = null;
 	}
-	
+
+	/**
+	 * Renders the component
+	 * 
+	 * @return string
+	 */
 	public abstract function render();
+
+	/**
+	 * Validates the component
+	 * 
+	 * @return bool
+	 */
 	public abstract function validate();
+
+	/**
+	 * Checks if the components value is empty
+	 * 
+	 * @return bool
+	 */
 	public abstract function isValueEmpty();
 
 	/**

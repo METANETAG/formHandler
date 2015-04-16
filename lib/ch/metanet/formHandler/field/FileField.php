@@ -3,6 +3,9 @@
 namespace ch\metanet\formHandler\field;
 
 use ch\metanet\formHandler\listener\FileFieldListener;
+use ch\metanet\formHandler\renderer\FileFieldRenderer;
+use ch\metanet\formHandler\renderer\SimpleFileFieldRenderer;
+use timesplinter\tsfw\common\ArrayUtils;
 
 /**
  * @author Pascal Muenst <entwicklung@metanet.ch>
@@ -16,33 +19,47 @@ class FileField extends Field
 	const VALUE_ERROR = 'error';
 	const VALUE_SIZE = 'size';
 
+	/** @var FileFieldRenderer */
+	protected $fileFieldRenderer;
+
+	public function __construct($name, $label, array $ruleSet = array())
+	{
+		parent::__construct($name, $label, $ruleSet);
+
+		$this->fileFieldRenderer = new SimpleFileFieldRenderer();
+	}
+
+
 	public function render()
 	{
-		return $this->fieldComponentRenderer->render(
-			$this,
-			'<input type="file" name="' . $this->getFormIdentifierAsString() . '" id="' . $this->name . '">'
-		);
+		return $this->fieldComponentRenderer->render($this,	$this->fileFieldRenderer->render($this));
 	}
 
 	public function validate()
 	{
-		$valid = parent::validate();
-
-		if($valid === false)
+		if(parent::validate() === false)
 			return false;
-
-		$resCode = $this->value['error'];
 
 		foreach($this->listeners as $l) {
 			if($l instanceof FileFieldListener === false)
 				continue;
 
 			/** @var FileFieldListener $l */
-			
-			if($resCode === UPLOAD_ERR_OK) {
-				$l->onUploadSuccess($this->formHandler, $this);
+
+			if(ArrayUtils::isAssociative($this->value) === true) {
+				if($this->value[self::VALUE_ERROR] === UPLOAD_ERR_OK) {
+					$l->onUploadSuccess($this->formComponent, $this, $this->value);
+				} else {
+					$l->onUploadFail($this->formComponent, $this, $this->value);
+				}
 			} else {
-				$l->onUploadFail($this->formHandler, $this);
+				foreach($this->value as $fileInfo) {
+					if($fileInfo[self::VALUE_ERROR] === UPLOAD_ERR_OK) {
+						$l->onUploadSuccess($this->formComponent, $this, $fileInfo);
+					} else {
+						$l->onUploadFail($this->formComponent, $this, $fileInfo);
+					}
+				}
 			}
 		}
 
@@ -54,12 +71,20 @@ class FileField extends Field
 		if(parent::isValueEmpty() === true)
 			return true;
 
-		if($this->value[self::VALUE_ERROR] === UPLOAD_ERR_NO_FILE)
-			return true;
+		// @TODO make it nicer
+		if(ArrayUtils::isAssociative($this->value) === true) {
+			return (isset($this->value[self::VALUE_ERROR]) === false || $this->value[self::VALUE_ERROR] === UPLOAD_ERR_NO_FILE);
+		}
 
-		return false;
+		foreach($this->value as $i => $fileInfo) {
+			if($fileInfo[self::VALUE_ERROR] === UPLOAD_ERR_NO_FILE)
+				continue;
+
+			return false;
+		}
+
+		return true;
 	}
-
 
 	/**
 	 * @param string|null $selector The data selector. NULL means the whole data array
@@ -71,6 +96,58 @@ class FileField extends Field
 			return $this->value;
 
 		return $this->value[$selector];
+	}
+
+	public function setInputData($data)
+	{
+		if($data !== null && is_array($data) === false) {
+			throw new \InvalidArgumentException('Illegal input data for field ' . $this->name . '. Input data should be an array but is ' . gettype($data) . '.');
+		}
+
+		$normalizedData = (is_array($data[self::VALUE_ERROR]) === false) ? $data : $this->convertMultiFileArray($data);
+
+		parent::setInputData($normalizedData);
+	}
+
+	/**
+	 * @return FileFieldRenderer
+	 */
+	public function getFileFieldRenderer()
+	{
+		return $this->fileFieldRenderer;
+	}
+
+	/**
+	 * @param FileFieldRenderer $fileFieldRenderer
+	 */
+	public function setFileFieldRenderer(FileFieldRenderer $fileFieldRenderer)
+	{
+		$this->fileFieldRenderer = $fileFieldRenderer;
+	}
+
+	/**
+	 * Restructures an input array of multiple files
+	 *
+	 * @param array $filesArr
+	 *
+	 * @return array
+	 */
+	protected function convertMultiFileArray(array $filesArr)
+	{
+		$files = array();
+		$filesCount = count($filesArr[self::VALUE_NAME]);
+
+		for($i = 0; $i < $filesCount; ++$i) {
+			$files[] = array(
+				self::VALUE_NAME => $filesArr[self::VALUE_NAME][$i],
+				self::VALUE_TYPE => $filesArr[self::VALUE_TYPE][$i],
+				self::VALUE_TMP_NAME => $filesArr[self::VALUE_TMP_NAME][$i],
+				self::VALUE_ERROR => $filesArr[self::VALUE_ERROR][$i],
+				self::VALUE_SIZE => $filesArr[self::VALUE_SIZE][$i],
+			);
+		}
+
+		return $files;
 	}
 }
 
