@@ -3,6 +3,8 @@ formHandler
 
 [![Latest Stable Version](https://poser.pugx.org/metanet/form-handler/v/stable.svg)](https://packagist.org/packages/metanet/form-handler)
 [![Build Status](https://travis-ci.org/METANETAG/formHandler.svg)](https://travis-ci.org/METANETAG/formHandler)
+[![License](https://poser.pugx.org/metanet/form-handler/license)](https://packagist.org/packages/metanet/form-handler)
+[![Total Downloads](https://poser.pugx.org/metanet/form-handler/downloads)](https://packagist.org/packages/metanet/form-handler)
 
 This is a library for handling web based forms written in PHP. It takes care about verifying and rendering form components.
 
