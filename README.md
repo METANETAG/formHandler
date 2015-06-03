@@ -16,6 +16,18 @@ Basic requirements of the formHandler library are:
 
 [See the wiki](http://github.com/METANETAG/formHandler/wiki) for more information about how to use the library.
 
+Install it using composer:
+
+```json
+{
+	"require": {
+		"metanet/form-handler": "1.2.*"
+	}
+}
+```
+
+or via CLI: `composer require metanet/form-handler:1.2.*`
+
 Quick code example:
 
 ```php
