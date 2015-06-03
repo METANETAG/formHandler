@@ -96,9 +96,9 @@ class FileFieldTest extends \PHPUnit_Framework_TestCase
 	public function testValidation()
 	{
 		/** @var FileFieldListener $mockFileFieldListener */
-		$mockFileFieldListener = $this->getMock(FileFieldListener::class);
+		$mockFileFieldListener = $this->getMock('\ch\metanet\formHandler\listener\FileFieldListener');
 		/** @var Form $mockForm */
-		$mockForm = $this->getMock(Form::class);
+		$mockForm = $this->getMock('ch\metanet\formHandler\component\Form');
 
 		$field = new FileField('field1', 'field1');
 		$field->setFormComponent($mockForm);
