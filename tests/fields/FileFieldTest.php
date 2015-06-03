@@ -2,7 +2,9 @@
 
 namespace tests\fields;
 
+use ch\metanet\formHandler\component\Form;
 use ch\metanet\formHandler\field\FileField;
+use ch\metanet\formHandler\listener\FileFieldListener;
 
 /**
  * @author Pascal Muenst <entwicklung@metanet.ch>
@@ -78,6 +80,7 @@ class FileFieldTest extends \PHPUnit_Framework_TestCase
 	{
 		$field = new FileField('field1', 'field1');
 		
+		$field->setValue(null);
 		$this->assertEquals($field->isValueEmpty(), true, 'Null value');
 
 		$field->setValue(array());
@@ -88,6 +91,20 @@ class FileFieldTest extends \PHPUnit_Framework_TestCase
 
 		$field->setValue($this->getEmptyNormalizedFileArray());
 		$this->assertEquals($field->isValueEmpty(), true);
+	}
+	
+	public function testValidation()
+	{
+		/** @var FileFieldListener $mockFileFieldListener */
+		$mockFileFieldListener = $this->getMock(FileFieldListener::class);
+		/** @var Form $mockForm */
+		$mockForm = $this->getMock(Form::class);
+
+		$field = new FileField('field1', 'field1');
+		$field->setFormComponent($mockForm);
+		$field->addListener($mockFileFieldListener);
+		
+		$this->assertTrue($field->validate());
 	}
 	
 	protected function getRequestFileArray()
