@@ -38,6 +38,9 @@ class FileField extends Field
 		if(parent::validate() === false)
 			return false;
 
+		if($this->isValueEmpty() === true)
+			return true;
+		
 		foreach($this->listeners as $l) {
 			if($l instanceof FileFieldListener === false)
 				continue;
