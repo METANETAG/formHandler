@@ -36,7 +36,7 @@ class ValidDomainFormatRule extends Rule
 			return true;
  
 		$fldValue = $this->ignoreSurroundingSpaces ? trim($field->getValue()) : $field->getValue();
-		$fldValue = preg_replace(array('@^[a-z]+://@i', '@^www\.@i'), null, $fldValue);
+		$fldValue = preg_replace(array('/\xE2\x80\x8B/', '/ /', '@^[a-z]+://@i', '@^www\.@i'), null, $fldValue);
 
 		if(($lastPoint = strrpos($fldValue, '.')) === false)
 			return false;
