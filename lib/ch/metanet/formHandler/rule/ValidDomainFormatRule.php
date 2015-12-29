@@ -11,19 +11,19 @@ use ch\metanet\formHandler\field\Field;
 class ValidDomainFormatRule extends Rule
 {
 	protected $publicTld;
-	protected $ignoreSurroundingSpaces;
+	protected $ignoreSpaces;
 
 	/**
 	 * @param $errorMessage
 	 * @param bool $publicTld
-	 * @param bool $ignoreSurroundingSpaces
+	 * @param bool $ignoreSpaces
 	 */
-	function __construct($errorMessage, $publicTld = true, $ignoreSurroundingSpaces = true)
+	function __construct($errorMessage, $publicTld = true, $ignoreSpaces = true)
 	{
 		parent::__construct($errorMessage);
 
 		$this->publicTld = $publicTld;
-		$this->ignoreSurroundingSpaces = $ignoreSurroundingSpaces;
+		$this->ignoreSpaces = $ignoreSpaces;
 	}
 
 	/**
@@ -34,9 +34,14 @@ class ValidDomainFormatRule extends Rule
 	{
 		if($field->isValueEmpty() === true)
 			return true;
+
+		$rplArr = array('/\xE2\x80\x8B/', '@^[a-z]+://@i', '@^www\.@i');
+
+		if($this->ignoreSpaces) {
+			$rplArr[] = '/ /';
+		}
  
-		$fldValue = $this->ignoreSurroundingSpaces ? trim($field->getValue()) : $field->getValue();
-		$fldValue = preg_replace(array('/\xE2\x80\x8B/', '/ /', '@^[a-z]+://@i', '@^www\.@i'), null, $fldValue);
+		$fldValue = preg_replace($rplArr, null, $field->getValue());
 
 		if(($lastPoint = strrpos($fldValue, '.')) === false)
 			return false;
