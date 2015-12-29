@@ -12,12 +12,14 @@ use ch\metanet\formHandler\field\Field;
 class ValidEmailAddressRule extends Rule
 {
 	protected $checkMx;
+	protected $trueOnFailure;
 
-	function __construct($errorMessage, $checkMx = true)
+	function __construct($errorMessage, $checkMx = true, $trueOnFailure = true)
 	{
 		parent::__construct($errorMessage);
 
 		$this->checkMx = $checkMx;
+		$this->trueOnFailure = $trueOnFailure;
 	}
 
 	/**
@@ -45,7 +47,11 @@ class ValidEmailAddressRule extends Rule
 			return true;
 
 		// Port 25 fallback check if there's no MX record
-		$aRecords = dns_get_record($domain, DNS_A);
+		$aRecords = @dns_get_record($domain, DNS_A);
+
+		if($aRecords === false) {
+			return $this->trueOnFailure;
+		}
 
 		if(count($aRecords) <= 0)
 			return false;
