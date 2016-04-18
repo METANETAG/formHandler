@@ -4,10 +4,10 @@ namespace ch\metanet\formHandler\field;
 
 use ch\metanet\formHandler\renderer\TextInputFieldRenderer;
 use ch\metanet\formHandler\renderer\InputFieldRenderer;
+use ch\metanet\formHandler\rule\NoArrayRule;
 
 /**
- * @author Pascal Muenst <entwicklung@metanet.ch>
- * @copyright Copyright (c) 2014, METANET AG
+ * @copyright Copyright (c) 2016, METANET AG <entwicklung@metanet.ch>
  */
 class InputField extends Field
 {
@@ -16,6 +16,7 @@ class InputField extends Field
 	public function __construct($name, $label, array $ruleSet = array())
 	{
 		parent::__construct($name, $label, $ruleSet);
+		$this->addRule(new NoArrayRule('Invalid value.'));
 
 		$this->inputFieldRenderer = new TextInputFieldRenderer();
 	}
