@@ -127,10 +127,15 @@ class FileField extends Field
 
 	public function setRequestData($data)
 	{
-		if($data !== null && is_array($data) === false) {
+		if(is_null($data)) {
+			parent::setRequestData($data);
+			return true;
+		}
+
+		if(!is_array($data)) {
 			throw new \InvalidArgumentException('Illegal input data for field ' . $this->name . '. Input data should be an array but is ' . gettype($data) . '.');
 		}
-		
+
 		if(
 			!isset($data[self::VALUE_NAME])
 			|| !isset($data[self::VALUE_TMP_NAME])
@@ -144,6 +149,7 @@ class FileField extends Field
 		$normalizedData = (is_array($data[self::VALUE_ERROR]) === false) ? $data : $this->convertMultiFileArray($data);
 
 		parent::setRequestData($normalizedData);
+		return true;
 	}
 
 	/**
