@@ -130,6 +130,16 @@ class FileField extends Field
 		if($data !== null && is_array($data) === false) {
 			throw new \InvalidArgumentException('Illegal input data for field ' . $this->name . '. Input data should be an array but is ' . gettype($data) . '.');
 		}
+		
+		if(
+			!isset($data[self::VALUE_NAME])
+			|| !isset($data[self::VALUE_TMP_NAME])
+			|| !isset($data[self::VALUE_TYPE])
+			|| !isset($data[self::VALUE_ERROR])
+			|| !isset($data[self::VALUE_SIZE])
+		) {
+			throw new \Exception('Missing input data for field '. $this->name.'. Input data should contain fields name, tmp_name, type, error and size.');
+		}
 
 		$normalizedData = (is_array($data[self::VALUE_ERROR]) === false) ? $data : $this->convertMultiFileArray($data);
 
